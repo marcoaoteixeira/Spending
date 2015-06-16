@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Spending.Core", "src\Nameless.Spending.Core\Nameless.Spending.Core.csproj", "{57A48E73-7733-4719-B982-3089CF7A1B66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{8B191BDD-28CD-401F-9811-E3FC61C5F206}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E8872E9E-6311-415D-A9FC-5E6CFE8CD379}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtLib", "ExtLib", "{A481458E-BFED-45BD-9541-45EDC2B960C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework", "..\..\Framework\src\Nameless.Framework\Nameless.Framework.csproj", "{9E76E34C-C1DC-4F9D-B071-99292C6B4F45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Web", "..\..\Framework\src\Nameless.Framework.Web\Nameless.Framework.Web.csproj", "{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Extras", "..\..\Framework\extras\Nameless.Framework.Extras\Nameless.Framework.Extras.csproj", "{D1390900-5D06-4834-9B89-061AFCEA197C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.Web.Extras", "..\..\Framework\extras\Nameless.Framework.Web.Extras\Nameless.Framework.Web.Extras.csproj", "{3B613F9C-75B4-4C43-AE53-EE68331CE721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Framework.IoC", "..\..\Framework\supports\Nameless.Framework.IoC\Nameless.Framework.IoC.csproj", "{3BA909C3-2869-423B-90E8-AD5572920C9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{29D442B8-4250-4C3A-88EC-157226713AA1}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Spending.Web", "src\Nameless.Spending.Web\Nameless.Spending.Web.csproj", "{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57A48E73-7733-4719-B982-3089CF7A1B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A48E73-7733-4719-B982-3089CF7A1B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A48E73-7733-4719-B982-3089CF7A1B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A48E73-7733-4719-B982-3089CF7A1B66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E76E34C-C1DC-4F9D-B071-99292C6B4F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E76E34C-C1DC-4F9D-B071-99292C6B4F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E76E34C-C1DC-4F9D-B071-99292C6B4F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E76E34C-C1DC-4F9D-B071-99292C6B4F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1390900-5D06-4834-9B89-061AFCEA197C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1390900-5D06-4834-9B89-061AFCEA197C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1390900-5D06-4834-9B89-061AFCEA197C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1390900-5D06-4834-9B89-061AFCEA197C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B613F9C-75B4-4C43-AE53-EE68331CE721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B613F9C-75B4-4C43-AE53-EE68331CE721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B613F9C-75B4-4C43-AE53-EE68331CE721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B613F9C-75B4-4C43-AE53-EE68331CE721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BA909C3-2869-423B-90E8-AD5572920C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA909C3-2869-423B-90E8-AD5572920C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA909C3-2869-423B-90E8-AD5572920C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA909C3-2869-423B-90E8-AD5572920C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57A48E73-7733-4719-B982-3089CF7A1B66} = {8B191BDD-28CD-401F-9811-E3FC61C5F206}
+		{9E76E34C-C1DC-4F9D-B071-99292C6B4F45} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
+		{8FDE13A8-BE1C-42F7-9CCE-BB3B73518958} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
+		{D1390900-5D06-4834-9B89-061AFCEA197C} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
+		{3B613F9C-75B4-4C43-AE53-EE68331CE721} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
+		{3BA909C3-2869-423B-90E8-AD5572920C9B} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
+		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF} = {8B191BDD-28CD-401F-9811-E3FC61C5F206}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Localization cultureName="en-US">
+	<Item>
+		<ID>Getting Started</ID>
+		<Message>Getting Started</Message>
+	</Item>
+</Localization>
