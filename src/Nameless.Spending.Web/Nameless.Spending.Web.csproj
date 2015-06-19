@@ -124,6 +124,7 @@
     <Content Include="App_Data\Localization\localization.en-US.l10n" />
     <Content Include="App_Data\Localization\localization.pt-BR.l10n" />
     <Content Include="App_Data\database.s3db" />
+    <Content Include="bower.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

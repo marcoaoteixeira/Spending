@@ -1,0 +1,20 @@
+{
+    "name": "Spending",
+    "version": "1.0.0",
+    "description": "Meu aplicativo de controle de contas",
+    "authors": [
+        "Marco Antonio Orestes Teixeira (Nameless)"
+    ],
+    "license": "GPL v.3",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "bootstrap": "3.3.5",
+        "angular": "1.4.0"
+    }
+}
