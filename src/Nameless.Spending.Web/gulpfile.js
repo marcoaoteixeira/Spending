@@ -13,15 +13,22 @@ var config = {
 	/* AngularJS Bundle **************************************************** */
 	angularsrc: [
 		'bower_components/angular/angular.min.js',
+		'bower_components/angular-i18n/angular-locale_pt-br.js',
 		'bower_components/angular-animate/angular-animate.min.js',
 		'bower_components/angular-aria/angular-aria.min.js',
+<<<<<<< HEAD
 		//'bower_components/angular-bootstrap-ui/src/**/*.js',
+=======
+>>>>>>> 04794b53ddf6083398501095fbe57c9540a5256a
 		'bower_components/angular-cookies/angular-cookies.min.js',
-		'bower_components/angular-i18n/angular-locale_pt-br.js',
+		'bower_components/angular-loader/angular-loader.min.js',
+		'bower_components/angular-messages/angular-messages.min.js',
 		'bower_components/angular-resource/angular-resource.min.js',
 		'bower_components/angular-route/angular-route.min.js',
 		'bower_components/angular-sanitize/angular-sanitize.min.js',
-		'bower_components/angular-touch/angular-touch.min.js'
+		'bower_components/angular-touch/angular-touch.min.js',
+
+		'bower_components/angular-touch/angular-touch.min.js',
 	],
 	angularbundle: 'Scripts/angular-bundle.min.js',
 	/* **************************************************** AngularJS Bundle */
