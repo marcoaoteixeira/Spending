@@ -22,6 +22,7 @@
 		"angular-i18n": "~1.4.1",
 		"angular-loader": "~1.4.1",
 		"angular-loading-bar": "~0.8.0",
+		"angular-local-storage": "~0.2.2",
 		"angular-messages": "~1.4.1",
 		"angular-resource": "~1.4.1",
 		"angular-route": "~1.4.1",
