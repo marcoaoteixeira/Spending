@@ -1,18 +1,28 @@
-/*global angular*/
+/* global angular */
 
 (function () {
 	'use strict';
 
-	/* Define controllers ************************************************** */
+	/* Define controllers ------------------------------------------------------- */
 	angular
-		.module('App')
-		.controller('CategoryController', CategoryController);
-	/* ************************************************** Define controllers */
+		.module('Application')
+		.controller('ListCategoryController', ListCategoryController)
+        .controller('NewCategoryController', NewCategoryController);
+	/* ------------------------------------------------------- Define controllers */
+    
+    /* List Category Controller ------------------------------------------------- */
+	ListCategoryController.$inject = ['$scope'];
 
-	/* Category Controller ************************************************* */
-	CategoryController.$inject = ['$scope'];
+	function ListCategoryController($scope) {
 
-	function CategoryController($scope) {
 	};
-	/* ************************************************* Category Controller */
+	/* ------------------------------------------------- List Category Controller */
+
+	/* New Category Controller -------------------------------------------------- */
+	NewCategoryController.$inject = ['$scope'];
+
+	function NewCategoryController($scope) {
+
+	};
+	/* -------------------------------------------------- New Category Controller */
 }());

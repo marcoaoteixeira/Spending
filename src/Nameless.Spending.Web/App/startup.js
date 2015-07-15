@@ -4,7 +4,7 @@
 	'use strict';
 
 	angular
-		.module('App')
+		.module('Application')
 		.run(['$rootScope', 'TranslationService', function ($rootScope, translationService) {
 			translationService.defineTranslationDelegate($rootScope);
 		}]);

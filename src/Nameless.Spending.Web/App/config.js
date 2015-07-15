@@ -1,63 +1,46 @@
-/*global angular*/
+/* global angular */
 
 (function () {
 	'use strict';
 
 	angular
-		.module('App')
+		.module('Application')
 		.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
-			/* Define routes ---------------------------------------------------------- */
-
-			/* ApplicationController ------------------------------------------------- */
+			/* ApplicationController ---------------------------------------------------- */
 			$routeProvider
+                .when('/', {
+                    controller: 'DashboardController',
+                    templateUrl: 'views/dashboard/charts.html'
+                })
 				.when('/error', {
 					controller: 'ApplicationController',
-					templateUrl: '/views/shared/error.html'
+					templateUrl: 'views/shared/error.html'
 				});
+			/* ---------------------------------------------------- ApplicationController */
 
-			/* HomeController -------------------------------------------------------- */
+			/* CategoryController ------------------------------------------------------- */
 			$routeProvider
-				.when('/home', {
-					controller: 'IndexController',
-					templateUrl: '/views/home/index.html'
+				.when('/categories', {
+					controller: 'ListCategoryController',
+					templateUrl: 'views/categories/list.html'
 				});
-
-			/* BudgetController ------------------------------------------------------ */
+			/* ------------------------------------------------------- CategoryController */
+            
+            /* DashboardController ------------------------------------------------------ */
 			$routeProvider
-				.when('/budget', {
-					controller: 'ListBudgetController',
-					templateUrl: '/views/budget/list.html'
-				})
-				.when('/budget/new', {
-					controller: 'NewBudgetController',
-					templateUrl: '/views/budget/new.html'
-				})
-				.when('/budget/delete', {
-					controller: 'DeleteBudgetController',
-					templateUrl: '/views/budget/delete.html'
+				.when('/dashboard', {
+					controller: 'DashboardController',
+					templateUrl: 'views/dashboard/charts.html'
 				});
-
-			/* FundSourceController -------------------------------------------------- */
-			$routeProvider
-				.when('/fundsource', {
-					controller: 'ListFundSourceController',
-					templateUrl: '/views/fundsource/list.html'
-				})
-				.when('/fundsource/new', {
-					controller: 'NewFundSourceController',
-					templateUrl: '/views/fundsource/new.html'
-				})
-				.when('/fundsource/delete', {
-					controller: 'DeleteFundSourceController',
-					templateUrl: '/views/fundsource/delete.html'
-				});
-
+			/* ------------------------------------------------------ DashboardController */
+			
 			$routeProvider.otherwise({ redirectTo: '/error' });
 
-			/* Configure location ---------------------------------------------------- */
+			/* Configure location provider ---------------------------------------------- */
 			$locationProvider.html5Mode({
 				enabled: false,
 				requireBase: false
 			});
+			/* ---------------------------------------------- Configure location provider */
 		}]);
 }());

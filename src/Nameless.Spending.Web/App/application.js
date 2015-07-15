@@ -4,7 +4,7 @@
     'use strict';
 
     angular
-		.module('App', [
+		.module('Application', [
 			'ngAnimate',
 			'ngAria',
 			'ngCookies',

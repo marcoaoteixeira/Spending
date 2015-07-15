@@ -84,7 +84,7 @@
             close      = 0,
             brace      = '',
             colonIndex = 0,
-            argNumber  = '',
+            argNumber  = 0,
             argFormat  = '',
             arg        = null;
         
