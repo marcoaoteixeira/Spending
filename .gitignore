@@ -1,6 +1,9 @@
 bin
 obj
 packages
+bower_components
+node_modules
 *.user
 *.DotSettings
 *.tmp
+*.suo
