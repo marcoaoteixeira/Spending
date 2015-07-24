@@ -4,22 +4,22 @@ using Nameless.Framework.Mapper;
 using Nameless.Spending.Core.CommandQuery.Commands;
 
 namespace Nameless.Spending.Core.Models.Bindings.Mappings {
-	public class CategoryMapperDefinition : AutoMapperMapperDefinition {
+	public class DebitMapperDefinition : AutoMapperMapperDefinition {
 		#region Public Override Properties
 
 		public override Type From {
-			get { return typeof(CategoryBindingModel); }
+			get { return typeof(DebitBindingModel); }
 		}
 
 		public override Type To {
-			get { return typeof(CreateCategoryCommand); }
+			get { return typeof(AlterDebitCommand); }
 		}
 		
 		#endregion
 
 		#region Public Constructors
 
-		public CategoryMapperDefinition(IConfiguration configuration)
+		public DebitMapperDefinition(IConfiguration configuration)
 			: base(configuration) { }
 
 		#endregion
@@ -29,7 +29,8 @@ namespace Nameless.Spending.Core.Models.Bindings.Mappings {
 		public override void Create() {
 			base.Create();
 
-			Configuration.CreateMap<CategoryBindingModel, CreateCategoryCommand>();
+			Configuration.CreateMap<DebitBindingModel, AlterDebitCommand>()
+				.ForMember(command => command.AlterFundSourceID, options => options.MapFrom(source => source.FundSourceID));
 		}
 
 		#endregion

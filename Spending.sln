@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{29D442
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Spending.Web", "src\Nameless.Spending.Web\Nameless.Spending.Web.csproj", "{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nameless.Spending.Core.UnitTest", "tests\Nameless.Spending.Core.UnitTest\Nameless.Spending.Core.UnitTest.csproj", "{B4F33B30-D6AC-4393-BA01-8747728314F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F33B30-D6AC-4393-BA01-8747728314F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F33B30-D6AC-4393-BA01-8747728314F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F33B30-D6AC-4393-BA01-8747728314F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F33B30-D6AC-4393-BA01-8747728314F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +82,6 @@ Global
 		{3B613F9C-75B4-4C43-AE53-EE68331CE721} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
 		{3BA909C3-2869-423B-90E8-AD5572920C9B} = {A481458E-BFED-45BD-9541-45EDC2B960C8}
 		{C8D461FD-4392-4FC2-BFF2-6AC5E6FB97DF} = {8B191BDD-28CD-401F-9811-E3FC61C5F206}
+		{B4F33B30-D6AC-4393-BA01-8747728314F8} = {E8872E9E-6311-415D-A9FC-5E6CFE8CD379}
 	EndGlobalSection
 EndGlobal

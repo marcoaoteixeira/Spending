@@ -35,20 +35,20 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			// Between values (Value)
 			if (credit.MinValue != 0 && credit.MaxValue != 0) {
 				specs.Add(_ =>
-				((Credit)_).Value >= credit.MinValue &&
-				((Credit)_).Value <= credit.MaxValue);
+					((Credit)_).Value >= credit.MinValue &&
+					((Credit)_).Value <= credit.MaxValue);
 			}
 
 			// From MinValue to greater values.
 			if (credit.MinValue != 0 && credit.MaxValue <= 0) {
 				specs.Add(_ =>
-				((Credit)_).Value >= credit.MinValue);
+					((Credit)_).Value >= credit.MinValue);
 			}
 
 			// From MaxValue to lower values.
 			if (credit.MinValue <= 0 && credit.MaxValue != 0) {
 				specs.Add(_ =>
-				((Credit)_).Value <= credit.MaxValue);
+					((Credit)_).Value <= credit.MaxValue);
 			}
 
 			// Between dates (Date)
@@ -71,7 +71,8 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			}
 
 			if (credit.FundSourceID != 0) {
-				specs.Add(_ => ((Credit)_).FundSource.ID == credit.FundSourceID);
+				specs.Add(_ =>
+					((Credit)_).FundSource.ID == credit.FundSourceID);
 			}
 		}
 

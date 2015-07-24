@@ -19,18 +19,6 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 
 		#endregion
 
-		#region Protected Properties
-
-		protected IRepository Repository {
-			get { return _repository; }
-		}
-
-		protected IMapper Mapper {
-			get { return _mapper; }
-		}
-
-		#endregion
-
 		#region Public Constructors
 
 		public FilterQueryHandler(IRepository repository, IMapper mapper) {
@@ -48,13 +36,13 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 		public Page<TOutput> Handle(TQuery query) {
 			var innerQuery = query as FilterQuery;
 
-			var method = Repository.GetType()
+			var method = _repository.GetType()
 				.GetMethod("Query")
 				.MakeGenericMethod(innerQuery.EntityType);
-			var queryable = innerQuery.ExecuteFilter((method.Invoke(Repository, null) as IQueryable<IEntity>));
+			var queryable = innerQuery.ExecuteFilter((method.Invoke(_repository, null) as IQueryable<IEntity>));
 			var totalItemCount = queryable.Count();
 			var enumerableOfEntity = typeof(IEnumerable<>).MakeGenericType(innerQuery.EntityType);
-			var items = Mapper.Map(queryable.ToList(), enumerableOfEntity, typeof(IEnumerable<TOutput>)) as IEnumerable<TOutput>;
+			var items = _mapper.Map(queryable.ToList(), enumerableOfEntity, typeof(IEnumerable<TOutput>)) as IEnumerable<TOutput>;
 
 			return new Page<TOutput>(items) {
 				PageNumber = innerQuery.PageNumber,

@@ -144,9 +144,9 @@
     <Content Include="App_Data\Configuration\Nameless.config" />
     <Content Include="App_Data\Localization\localization.en-US.l10n" />
     <Content Include="App_Data\Localization\localization.pt-BR.l10n" />
-    <Content Include="App_Data\database.s3db" />
     <Content Include="bower.json" />
     <Content Include="log4net.config" />
+    <Content Include="App_Data\database.s3db" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BudgetController.cs" />
+    <Compile Include="Controllers\FundSourceController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperationController.cs" />

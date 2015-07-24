@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4F33B30-D6AC-4393-BA01-8747728314F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nameless.Spending.Core.UnitTest</RootNamespace>
+    <AssemblyName>Nameless.Spending.Core.UnitTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandQuery\Commands\FundSourceCommandHandlerTest.cs" />
+    <Compile Include="CommandQuery\Commands\DebitCommandHandlerTest.cs" />
+    <Compile Include="CommandQuery\Commands\CreditCommandHandlerTest.cs" />
+    <Compile Include="CommandQuery\Commands\CategoryCommandHandlerTest.cs" />
+    <Compile Include="CommandQuery\Commands\BudgetCommandHandlerTest.cs" />
+    <Compile Include="Data\NHiberate\ModelInspectorTest.cs" />
+    <Compile Include="Fixtures\DataSource.cs" />
+    <Compile Include="ReflectionHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Framework\extras\Nameless.Framework.Extras\Nameless.Framework.Extras.csproj">
+      <Project>{d1390900-5d06-4834-9b89-061afcea197c}</Project>
+      <Name>Nameless.Framework.Extras</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Framework\extras\Nameless.Framework.Web.Extras\Nameless.Framework.Web.Extras.csproj">
+      <Project>{3b613f9c-75b4-4c43-ae53-ee68331ce721}</Project>
+      <Name>Nameless.Framework.Web.Extras</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Framework\src\Nameless.Framework.Web\Nameless.Framework.Web.csproj">
+      <Project>{8fde13a8-be1c-42f7-9cce-bb3b73518958}</Project>
+      <Name>Nameless.Framework.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Framework\src\Nameless.Framework\Nameless.Framework.csproj">
+      <Project>{9e76e34c-c1dc-4f9d-b071-99292c6b4f45}</Project>
+      <Name>Nameless.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Framework\supports\Nameless.Framework.IoC\Nameless.Framework.IoC.csproj">
+      <Project>{3ba909c3-2869-423b-90e8-ad5572920c9b}</Project>
+      <Name>Nameless.Framework.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Nameless.Spending.Core\Nameless.Spending.Core.csproj">
+      <Project>{57a48e73-7733-4719-b982-3089cf7a1b66}</Project>
+      <Name>Nameless.Spending.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -29,30 +29,32 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			var budgetItem = model as BudgetItemFilterModel;
 
 			if (!string.IsNullOrWhiteSpace(budgetItem.Description)) {
-				specs.Add(_ => ((BudgetItem)_).Description.Contains(budgetItem.Description));
+				specs.Add(_ =>
+					((BudgetItem)_).Description.Contains(budgetItem.Description));
 			}
 
 			// Between values (Value)
 			if (budgetItem.MinValue != 0 && budgetItem.MaxValue != 0) {
 				specs.Add(_ =>
-				((BudgetItem)_).Value >= budgetItem.MinValue &&
-				((BudgetItem)_).Value <= budgetItem.MaxValue);
+					((BudgetItem)_).Value >= budgetItem.MinValue &&
+					((BudgetItem)_).Value <= budgetItem.MaxValue);
 			}
 
 			// From MinValue to greater values.
 			if (budgetItem.MinValue != 0 && budgetItem.MaxValue <= 0) {
 				specs.Add(_ =>
-				((BudgetItem)_).Value >= budgetItem.MinValue);
+					((BudgetItem)_).Value >= budgetItem.MinValue);
 			}
 
 			// From MaxValue to lower values.
 			if (budgetItem.MinValue <= 0 && budgetItem.MaxValue != 0) {
 				specs.Add(_ =>
-				((BudgetItem)_).Value <= budgetItem.MaxValue);
+					((BudgetItem)_).Value <= budgetItem.MaxValue);
 			}
 
 			if (budgetItem.BudgetID != 0) {
-				specs.Add(_ => ((BudgetItem)_).Budget.ID == budgetItem.BudgetID);
+				specs.Add(_ =>
+					((BudgetItem)_).Budget.ID == budgetItem.BudgetID);
 			}
 		}
 

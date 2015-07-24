@@ -4,22 +4,22 @@ using Nameless.Framework.Mapper;
 using Nameless.Spending.Core.CommandQuery.Commands;
 
 namespace Nameless.Spending.Core.Models.Bindings.Mappings {
-	public class CategoryMapperDefinition : AutoMapperMapperDefinition {
+	public class CreditMapperDefinition : AutoMapperMapperDefinition {
 		#region Public Override Properties
 
 		public override Type From {
-			get { return typeof(CategoryBindingModel); }
+			get { return typeof(CreditBindingModel); }
 		}
 
 		public override Type To {
-			get { return typeof(CreateCategoryCommand); }
+			get { return typeof(AlterCreditCommand); }
 		}
 		
 		#endregion
 
 		#region Public Constructors
 
-		public CategoryMapperDefinition(IConfiguration configuration)
+		public CreditMapperDefinition(IConfiguration configuration)
 			: base(configuration) { }
 
 		#endregion
@@ -29,7 +29,8 @@ namespace Nameless.Spending.Core.Models.Bindings.Mappings {
 		public override void Create() {
 			base.Create();
 
-			Configuration.CreateMap<CategoryBindingModel, CreateCategoryCommand>();
+			Configuration.CreateMap<CreditBindingModel, AlterCreditCommand>()
+				.ForMember(command => command.AlterFundSourceID, options => options.MapFrom(source => source.FundSourceID));
 		}
 
 		#endregion

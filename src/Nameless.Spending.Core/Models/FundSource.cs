@@ -5,6 +5,9 @@ namespace Nameless.Spending.Core.Models {
 	public class FundSource : Entity {
 		#region Private Read-Only Fields
 
+#pragma warning disable 0649
+		private readonly decimal _balance;
+#pragma warning restore 0649
 		private readonly ICollection<Credit> _credits = new HashSet<Credit>();
 		private readonly ICollection<Debit> _debits = new HashSet<Debit>();
 
@@ -20,15 +23,7 @@ namespace Nameless.Spending.Core.Models {
 			get { return _debits; }
 		}
 		public virtual decimal Balance {
-			get { return GetBalance(); }
-		}
-
-		#endregion
-
-		#region Private Methods
-
-		private decimal GetBalance() {
-			return Credits.Sum(_ => _.Value) - Debits.Sum(_ => _.Value);
+			get { return _balance; }
 		}
 
 		#endregion

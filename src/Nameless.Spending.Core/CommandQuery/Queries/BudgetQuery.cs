@@ -75,7 +75,8 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			}
 
 			if (budget.CategoryID != 0) {
-				specs.Add(_ => ((Budget)_).Category.ID == budget.CategoryID);
+				specs.Add(_ =>
+					((Budget)_).Category.ID == budget.CategoryID);
 			}
 		}
 

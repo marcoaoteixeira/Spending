@@ -35,20 +35,20 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			// Between values (Value)
 			if (debit.MinValue != 0 && debit.MaxValue != 0) {
 				specs.Add(_ =>
-				((Debit)_).Value >= debit.MinValue &&
-				((Debit)_).Value <= debit.MaxValue);
+					((Debit)_).Value >= debit.MinValue &&
+					((Debit)_).Value <= debit.MaxValue);
 			}
 
 			// From MinValue to greater values.
 			if (debit.MinValue != 0 && debit.MaxValue <= 0) {
 				specs.Add(_ =>
-				((Debit)_).Value >= debit.MinValue);
+					((Debit)_).Value >= debit.MinValue);
 			}
 
 			// From MaxValue to lower values.
 			if (debit.MinValue <= 0 && debit.MaxValue != 0) {
 				specs.Add(_ =>
-				((Debit)_).Value <= debit.MaxValue);
+					((Debit)_).Value <= debit.MaxValue);
 			}
 
 			// Between dates (Date)
@@ -71,11 +71,13 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			}
 
 			if (debit.CategoryID != 0) {
-				specs.Add(_ => ((Debit)_).Category.ID == debit.CategoryID);
+				specs.Add(_ =>
+					((Debit)_).Category.ID == debit.CategoryID);
 			}
 
 			if (debit.FundSourceID != 0) {
-				specs.Add(_ => ((Debit)_).FundSource.ID == debit.FundSourceID);
+				specs.Add(_ =>
+					((Debit)_).FundSource.ID == debit.FundSourceID);
 			}
 		}
 

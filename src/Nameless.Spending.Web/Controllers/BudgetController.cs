@@ -16,12 +16,14 @@ namespace Nameless.Spending.Web.Controllers {
 	public class BudgetController : WebApiController {
 		#region Private Read-Only Fields
 
+
+		private readonly ICommandHandler<AlterBudgetCommand> _alterBudgetCommandHandler;
+		private readonly ICommandHandler<CreateBudgetCommand> _createBudgetCommandHandler;
 		private readonly ICommandHandler<DeleteBudgetCommand> _deleteBudgetCommandHandler;
-		private readonly ICommandHandler<StoreBudgetCommand> _storeBudgetCommandHandler;
 		private readonly IQueryHandler<BudgetQuery, Page<BudgetViewModel>> _budgetQueryHandler;
 
+		private readonly ICommandHandler<CreateBudgetItemCommand> _createBudgetItemCommandHandler;
 		private readonly ICommandHandler<DeleteBudgetItemCommand> _deleteBudgetItemCommandHandler;
-		private readonly ICommandHandler<StoreBudgetItemCommand> _storeBudgetItemCommandHandler;
 		private readonly IQueryHandler<BudgetItemQuery, Page<BudgetItemViewModel>> _budgetItemQueryHandler;
 
 		#endregion
@@ -29,28 +31,31 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Public Constructors
 
 		public BudgetController(IMapper mapper
+			, ICommandHandler<AlterBudgetCommand> alterBudgetCommandHandler
+			, ICommandHandler<CreateBudgetCommand> createBudgetCommandHandler
 			, ICommandHandler<DeleteBudgetCommand> deleteBudgetCommandHandler
-			, ICommandHandler<StoreBudgetCommand> storeBudgetCommandHandler
 			, IQueryHandler<BudgetQuery, Page<BudgetViewModel>> budgetQueryHandler
 
+			, ICommandHandler<CreateBudgetItemCommand> createBudgetItemCommandHandler
 			, ICommandHandler<DeleteBudgetItemCommand> deleteBudgetItemCommandHandler
-			, ICommandHandler<StoreBudgetItemCommand> storeBudgetItemCommandHandler
 			, IQueryHandler<BudgetItemQuery, Page<BudgetItemViewModel>> budgetItemQueryHandler)
 			: base(mapper) {
+			Guard.Against.Null(alterBudgetCommandHandler, "alterBudgetCommandHandler");
+			Guard.Against.Null(createBudgetCommandHandler, "createBudgetCommandHandler");
 			Guard.Against.Null(deleteBudgetCommandHandler, "deleteBudgetCommandHandler");
-			Guard.Against.Null(storeBudgetCommandHandler, "storeBudgetCommandHandler");
 			Guard.Against.Null(budgetQueryHandler, "budgetQueryHandler");
 
+			Guard.Against.Null(createBudgetItemCommandHandler, "alterBudgetItemCommandHandler");
 			Guard.Against.Null(deleteBudgetItemCommandHandler, "deleteBudgetItemCommandHandler");
-			Guard.Against.Null(storeBudgetItemCommandHandler, "storeBudgetItemCommandHandler");
 			Guard.Against.Null(budgetItemQueryHandler, "budgetItemQueryHandler");
 
+			_alterBudgetCommandHandler = alterBudgetCommandHandler;
+			_createBudgetCommandHandler = createBudgetCommandHandler;
 			_deleteBudgetCommandHandler = deleteBudgetCommandHandler;
-			_storeBudgetCommandHandler = storeBudgetCommandHandler;
 			_budgetQueryHandler = budgetQueryHandler;
 
+			_createBudgetItemCommandHandler = createBudgetItemCommandHandler;
 			_deleteBudgetItemCommandHandler = deleteBudgetItemCommandHandler;
-			_storeBudgetItemCommandHandler = storeBudgetItemCommandHandler;
 			_budgetItemQueryHandler = budgetItemQueryHandler;
 		}
 
@@ -59,30 +64,67 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Public Methods
 
 		[HttpDelete]
-		[Route("api/budget/{id:long:min(1)}")]
-		public IHttpActionResult Delete(long id) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
-			}
-
-			var command = new DeleteBudgetCommand { ID = id };
+		[Route("api/budget/{budget:long:min(1)}")]
+		public IHttpActionResult Delete(long budget) {
+			var command = new DeleteBudgetCommand {
+				BudgetID = budget
+			};
 
 			_deleteBudgetCommandHandler.Handle(command);
 
 			return Ok(Request.CreateResponse(HttpStatusCode.NoContent));
 		}
 
+		[HttpGet]
+		[Route("api/budget/{budget:long:min(1)}", Name = "GetBudget")]
+		public IHttpActionResult Get(long budget) {
+			var view = QueryBudgetByID(budget);
+
+			if (view == null) {
+				return NotFound();
+			}
+
+			return Ok(view);
+		}
+
+		[HttpGet]
+		[Route("api/budgets")]
+		public IHttpActionResult Get([FromUri]BudgetFilterModel filter) {
+			var query = new BudgetQuery(filter);
+			var result = _budgetQueryHandler.Handle(query);
+
+			return Ok(result);
+		}
+
+		[HttpPost]
+		[Route("api/budget")]
+		public IHttpActionResult Post([FromBody]BudgetBindingModel binding) {
+			var command = Mapper.Map<BudgetBindingModel, CreateBudgetCommand>(binding);
+
+			_createBudgetCommandHandler.Handle(command);
+
+			var view = QueryBudgetByID(command.BudgetID);
+
+			return Created(Url.Route("GetBudget", new { budget = view.ID }), view);
+		}
+
+		[HttpPut]
+		[Route("api/budget/{budget:long:min(1)}")]
+		public IHttpActionResult Put(long budget, [FromBody]BudgetBindingModel binding) {
+			var command = Mapper.Map<BudgetBindingModel, AlterBudgetCommand>(binding);
+
+			command.BudgetID = budget;
+
+			_alterBudgetCommandHandler.Handle(command);
+
+			var view = QueryBudgetByID(budget);
+
+			return Ok(view);
+		}
+
 		[HttpDelete]
-		[Route("api/budget/{budget:long:min(1)}/{item:long:min(1)}")]
+		[Route("api/budget/{budget:long:min(1)}/item/{item:long:min(1)}")]
 		public IHttpActionResult DeleteItem(long budget, long item) {
-			if (budget <= 0) {
-				return BadRequest("Invalid ID for budget.");
-			}
-
-			if (item <= 0) {
-				return BadRequest("Invalid ID for budget item.");
-			}
-
 			var command = new DeleteBudgetItemCommand {
 				BudgetID = budget,
 				ItemID = item
@@ -94,109 +136,61 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/budget/{id:long:min(1)}", Name = "Budget")]
-		public IHttpActionResult Get(long id) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
-			}
-
-			var model = new BudgetFilterModel { ID = id };
-			var query = new BudgetQuery(model);
-			var result = _budgetQueryHandler.Handle(query);
-
-			return Ok(result.Items.SingleOrDefault());
-		}
-
-		[HttpGet]
-		[Route("api/budget")]
-		public IHttpActionResult Get([FromUri]BudgetFilterModel model) {
-			var query = new BudgetQuery(model);
-			var result = _budgetQueryHandler.Handle(query);
-
-			return Ok(result);
-		}
-
-		[HttpGet]
-		[Route("api/budget/{budget:long:min(1)}/{item:long:min(1)}", Name = "BudgetItem")]
+		[Route("api/budget/{budget:long:min(1)}/item/{item:long:min(1)}", Name = "GetBudgetItem")]
 		public IHttpActionResult GetItem(long budget, long item) {
-			if (budget <= 0) {
-				return BadRequest("Invalid ID for budget.");
+			var view = QueryBudgetItemByID(budget, item);
+
+			if (view == null) {
+				return NotFound();
 			}
 
-			if (item <= 0) {
-				return BadRequest("Invalid ID for budget item.");
-			}
-
-			var model = new BudgetItemFilterModel {
-				BudgetID = budget,
-				ID = item
-			};
-			var query = new BudgetItemQuery(model);
-			var items = _budgetItemQueryHandler.Handle(query).Items;
-
-			return Ok(items.SingleOrDefault());
+			return Ok(view);
 		}
 
 		[HttpGet]
-		[Route("api/budget/{budget:long:min(1)}/items/{pageNumber:int=1}/{pageSize:int=10}")]
-		public IHttpActionResult GetItems(int budget, int pageNumber, int pageSize) {
-			if (budget <= 0) {
-				return BadRequest("Invalid ID for budget.");
-			}
-
-			var model = new BudgetItemFilterModel {
-				BudgetID = budget,
-				PageNumber = pageNumber,
-				PageSize = pageSize
-			};
-			var query = new BudgetItemQuery(model);
+		[Route("api/budget/{budget:long:min(1)}/items")]
+		public IHttpActionResult GetItems([FromUri]BudgetItemFilterModel filter) {
+			var query = new BudgetItemQuery(filter);
 			var result = _budgetItemQueryHandler.Handle(query);
 
 			return Ok(result);
 		}
 
 		[HttpPost]
-		[Route("api/budget")]
-		public IHttpActionResult Post(BudgetBindingModel model) {
-			model.ID = 0;
+		[Route("api/budget/{budget:long:min(1)}/item")]
+		public IHttpActionResult PostItem(long budget, [FromBody]BudgetItemBindingModel binding) {
+			var command = Mapper.Map<BudgetItemBindingModel, CreateBudgetItemCommand>(binding);
 
-			var command = Mapper.Map<BudgetBindingModel, StoreBudgetCommand>(model);
+			command.BudgetID = budget;
 
-			_storeBudgetCommandHandler.Handle(command);
+			_createBudgetItemCommandHandler.Handle(command);
 
-			model.ID = command.ID;
+			var view = QueryBudgetItemByID(budget, command.BudgetItemID);
 
-			return Created(Url.Route("Budget", new { id = model.ID }), model);
+			return Created(Url.Route("GetBudgetItem", new { budget = view.BudgetID, item = view.ID }), view);
 		}
 
-		[HttpPost]
-		[Route("api/budget/{budget:long:min(1)}")]
-		public IHttpActionResult PostItem(long budget, BudgetItemBindingModel model) {
-			model.ID = 0;
+		#endregion
 
-			var command = Mapper.Map<BudgetItemBindingModel, StoreBudgetItemCommand>(model);
+		#region Private Methods
 
-			_storeBudgetItemCommandHandler.Handle(command);
+		private BudgetViewModel QueryBudgetByID(long budget) {
+			var filter = new BudgetFilterModel { ID = budget };
+			var query = new BudgetQuery(filter);
+			var result = _budgetQueryHandler.Handle(query);
 
-			model.ID = command.ID;
-
-			return Created(Url.Route("BudgetItem", new { budget = model.BudgetID, item = model.ID }), model);
+			return result.Items.SingleOrDefault();
 		}
 
-		[HttpPut]
-		[Route("api/budget/{id:long:min(1)}")]
-		public IHttpActionResult Put(long id, BudgetBindingModel model) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
-			}
+		private BudgetItemViewModel QueryBudgetItemByID(long budget, long budgetItem) {
+			var filter = new BudgetItemFilterModel {
+				BudgetID = budget,
+				ID = budgetItem
+			};
+			var query = new BudgetItemQuery(filter);
+			var result = _budgetItemQueryHandler.Handle(query);
 
-			model.ID = id;
-
-			var command = Mapper.Map<BudgetBindingModel, StoreBudgetCommand>(model);
-
-			_storeBudgetCommandHandler.Handle(command);
-
-			return Ok(model);
+			return result.Items.SingleOrDefault();
 		}
 
 		#endregion

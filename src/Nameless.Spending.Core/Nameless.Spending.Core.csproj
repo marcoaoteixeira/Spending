@@ -60,12 +60,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandQuery\Commands\BudgetCommandHandler.cs" />
+    <Compile Include="CommandQuery\Commands\FundSourceCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\CategoryCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\CommandHandlerBase.cs" />
     <Compile Include="CommandQuery\Commands\CreditCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\DebitCommandHandler.cs" />
     <Compile Include="CommandQuery\Queries\BudgetItemQuery.cs" />
     <Compile Include="CommandQuery\Queries\BudgetQuery.cs" />
+    <Compile Include="CommandQuery\Queries\FundSourceQuery.cs" />
     <Compile Include="CommandQuery\Queries\CategoryQuery.cs" />
     <Compile Include="CommandQuery\Queries\CreditQuery.cs" />
     <Compile Include="CommandQuery\Queries\DebitQuery.cs" />
@@ -86,10 +88,13 @@
     <Compile Include="Infrastructure\EntityWriterInterceptor.cs" />
     <Compile Include="Models\Bindings\BudgetBindingModel.cs" />
     <Compile Include="Models\Bindings\BudgetItemBindingModel.cs" />
+    <Compile Include="Models\Bindings\FundSourceBindingModel.cs" />
     <Compile Include="Models\Bindings\CategoryBindingModel.cs" />
     <Compile Include="Models\Bindings\CreditBindingModel.cs" />
     <Compile Include="Models\Bindings\DebitBindingModel.cs" />
     <Compile Include="Models\Bindings\EntityBindingModel.cs" />
+    <Compile Include="Models\Bindings\Mappings\DebitMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\CreditMapperDefinition.cs" />
     <Compile Include="Models\Bindings\Mappings\CategoryMapperDefinition.cs" />
     <Compile Include="Models\Bindings\OperationBindingModel.cs" />
     <Compile Include="Models\Budget.cs" />
@@ -100,6 +105,7 @@
     <Compile Include="Models\Debit.cs" />
     <Compile Include="Models\Filters\BudgetFilterModel.cs" />
     <Compile Include="Models\Filters\BudgetItemFilterModel.cs" />
+    <Compile Include="Models\Filters\FundSourceFilterModel.cs" />
     <Compile Include="Models\Filters\CategoryFilterModel.cs" />
     <Compile Include="Models\Filters\CreditFilterModel.cs" />
     <Compile Include="Models\Filters\DebitFilterModel.cs" />

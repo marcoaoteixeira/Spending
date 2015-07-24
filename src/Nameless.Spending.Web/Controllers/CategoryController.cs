@@ -16,8 +16,10 @@ namespace Nameless.Spending.Web.Controllers {
 	public class CategoryController : WebApiController {
 		#region Private Read-Only Fields
 
+		private readonly ICommandHandler<AlterCategoryCommand> _alterCategoryCommandHandler;
+		private readonly ICommandHandler<CreateCategoryCommand> _createCategoryCommandHandler;
 		private readonly ICommandHandler<DeleteCategoryCommand> _deleteCategoryCommandHandler;
-		private readonly ICommandHandler<StoreCategoryCommand> _storeCategoryCommandHandler;
+
 		private readonly IQueryHandler<CategoryQuery, Page<CategoryViewModel>> _categoryQueryHandler;
 
 		#endregion
@@ -25,16 +27,19 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Public Constructors
 
 		public CategoryController(IMapper mapper
+			, ICommandHandler<AlterCategoryCommand> alterCategoryCommandHandler
+			, ICommandHandler<CreateCategoryCommand> createCategoryCommandHandler
 			, ICommandHandler<DeleteCategoryCommand> deleteCategoryCommandHandler
-			, ICommandHandler<StoreCategoryCommand> storeCategoryCommandHandler
 			, IQueryHandler<CategoryQuery, Page<CategoryViewModel>> categoryQueryHandler)
 			: base(mapper) {
+			Guard.Against.Null(alterCategoryCommandHandler, "alterCategoryCommandHandler");
+			Guard.Against.Null(createCategoryCommandHandler, "createCategoryCommandHandler");
 			Guard.Against.Null(deleteCategoryCommandHandler, "deleteCategoryCommandHandler");
-			Guard.Against.Null(storeCategoryCommandHandler, "storeCategoryCommandHandler");
 			Guard.Against.Null(categoryQueryHandler, "categoryQueryHandler");
 
+			_alterCategoryCommandHandler = alterCategoryCommandHandler;
+			_createCategoryCommandHandler = createCategoryCommandHandler;
 			_deleteCategoryCommandHandler = deleteCategoryCommandHandler;
-			_storeCategoryCommandHandler = storeCategoryCommandHandler;
 			_categoryQueryHandler = categoryQueryHandler;
 		}
 
@@ -43,13 +48,11 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Public Methods
 
 		[HttpDelete]
-		[Route("api/category/{id:long:min(1)}")]
-		public IHttpActionResult Delete(long id) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
-			}
-
-			var command = new DeleteCategoryCommand { ID = id };
+		[Route("api/category/{category:long:min(1)}")]
+		public IHttpActionResult Delete(long category) {
+			var command = new DeleteCategoryCommand {
+				CategoryID = category
+			};
 
 			_deleteCategoryCommandHandler.Handle(command);
 
@@ -57,23 +60,21 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/category/{id:long:min(1)}", Name = "Category")]
-		public IHttpActionResult Get(long id) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
+		[Route("api/category/{category:long:min(1)}", Name = "GetCategory")]
+		public IHttpActionResult Get(long category) {
+			var view = QueryByID(category);
+
+			if (view == null) {
+				return NotFound();
 			}
 
-			var model = new CategoryFilterModel { ID = id };
-			var query = new CategoryQuery(model);
-			var result = _categoryQueryHandler.Handle(query);
-
-			return Ok(result.Items.SingleOrDefault());
+			return Ok(view);
 		}
 
 		[HttpGet]
 		[Route("api/categories")]
-		public IHttpActionResult Get([FromUri]CategoryFilterModel model) {
-			var query = new CategoryQuery(model);
+		public IHttpActionResult Get([FromUri]CategoryFilterModel filter) {
+			var query = new CategoryQuery(filter);
 			var result = _categoryQueryHandler.Handle(query);
 
 			return Ok(result);
@@ -81,32 +82,40 @@ namespace Nameless.Spending.Web.Controllers {
 
 		[HttpPost]
 		[Route("api/category")]
-		public IHttpActionResult Post(CategoryBindingModel model) {
-			model.ID = 0;
+		public IHttpActionResult Post([FromBody]CategoryBindingModel binding) {
+			var command = Mapper.Map<CategoryBindingModel, CreateCategoryCommand>(binding);
 
-			var command = Mapper.Map<CategoryBindingModel, StoreCategoryCommand>(model);
+			_createCategoryCommandHandler.Handle(command);
 
-			_storeCategoryCommandHandler.Handle(command);
+			var view = QueryByID(command.CategoryID);
 
-			model.ID = command.ID;
-
-			return Created(Url.Route("Category", new { id = model.ID }), model);
+			return Created(Url.Route("GetCategory", new { category = view.ID }), view);
 		}
 
 		[HttpPut]
-		[Route("api/category/{id:long:min(1)}")]
-		public IHttpActionResult Put(long id, CategoryBindingModel model) {
-			if (id <= 0) {
-				return BadRequest("Invalid ID");
-			}
+		[Route("api/category/{category:long:min(1)}")]
+		public IHttpActionResult Put(long category, [FromBody]CategoryBindingModel binding) {
+			var command = Mapper.Map<CategoryBindingModel, AlterCategoryCommand>(binding);
 
-			model.ID = id;
+			command.CategoryID = category;
 
-			var command = Mapper.Map<CategoryBindingModel, StoreCategoryCommand>(model);
+			_alterCategoryCommandHandler.Handle(command);
 
-			_storeCategoryCommandHandler.Handle(command);
+			var view = QueryByID(category);
 
-			return Ok(model);
+			return Ok(view);
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private CategoryViewModel QueryByID(long category) {
+			var filter = new CategoryFilterModel { ID = category };
+			var query = new CategoryQuery(filter);
+			var result = _categoryQueryHandler.Handle(query);
+
+			return result.Items.SingleOrDefault();
 		}
 
 		#endregion

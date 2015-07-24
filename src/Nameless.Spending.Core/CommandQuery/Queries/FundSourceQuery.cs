@@ -5,18 +5,18 @@ using Nameless.Spending.Core.Models;
 using Nameless.Spending.Core.Models.Filters;
 
 namespace Nameless.Spending.Core.CommandQuery.Queries {
-	public class CategoryQuery : FilterQuery {
+	public class FundSourceQuery : FilterQuery {
 		#region Public Override Properties
 
 		public override Type EntityType {
-			get { return typeof(Category); }
+			get { return typeof(FundSource); }
 		}
 
 		#endregion
 
 		#region Public Constructors
 
-		public CategoryQuery(CategoryFilterModel model)
+		public FundSourceQuery(FundSourceFilterModel model)
 			: base(model) { }
 
 		#endregion
@@ -26,11 +26,11 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 		protected override void BuildFilterCriteria(ICollection<Expression<Func<IEntity, bool>>> specs, FilterModel model) {
 			base.BuildFilterCriteria(specs, model);
 
-			var category = model as CategoryFilterModel;
+			var fundSource = model as FundSourceFilterModel;
 
-			if (!string.IsNullOrWhiteSpace(category.Description)) {
+			if (!string.IsNullOrWhiteSpace(fundSource.Name)) {
 				specs.Add(_ =>
-					((Category)_).Description.Contains(category.Description));
+					((FundSource)_).Name.Contains(fundSource.Name));
 			}
 		}
 
