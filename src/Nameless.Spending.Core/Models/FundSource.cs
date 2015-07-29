@@ -6,7 +6,8 @@ namespace Nameless.Spending.Core.Models {
 		#region Private Read-Only Fields
 
 #pragma warning disable 0649
-		private readonly decimal _balance;
+		private readonly decimal _totalCredit;
+		private readonly decimal _totalDebit;
 #pragma warning restore 0649
 		private readonly ICollection<Credit> _credits = new HashSet<Credit>();
 		private readonly ICollection<Debit> _debits = new HashSet<Debit>();
@@ -22,8 +23,17 @@ namespace Nameless.Spending.Core.Models {
 		public virtual ICollection<Debit> Debits {
 			get { return _debits; }
 		}
+
+		public virtual decimal TotalCredit {
+			get { return _totalCredit; }
+		}
+
+		public virtual decimal TotalDebit {
+			get { return _totalDebit; }
+		}
+
 		public virtual decimal Balance {
-			get { return _balance; }
+			get { return TotalCredit - TotalDebit; }
 		}
 
 		#endregion

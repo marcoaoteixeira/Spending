@@ -86,6 +86,8 @@
     <Compile Include="Data\NHibernate\ModelInspector.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Infrastructure\EntityWriterInterceptor.cs" />
+    <Compile Include="Infrastructure\ReflectionHelper.cs" />
+    <Compile Include="Models\Balance.cs" />
     <Compile Include="Models\Bindings\BudgetBindingModel.cs" />
     <Compile Include="Models\Bindings\BudgetItemBindingModel.cs" />
     <Compile Include="Models\Bindings\FundSourceBindingModel.cs" />
@@ -93,9 +95,15 @@
     <Compile Include="Models\Bindings\CreditBindingModel.cs" />
     <Compile Include="Models\Bindings\DebitBindingModel.cs" />
     <Compile Include="Models\Bindings\EntityBindingModel.cs" />
+    <Compile Include="Models\Bindings\Mappings\AlterCreditMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\AlterCategoryMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\AlterBudgetMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\CreateBudgetItemMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\CreateCreditMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\CreateBudgetMapperDefinition.cs" />
     <Compile Include="Models\Bindings\Mappings\DebitMapperDefinition.cs" />
     <Compile Include="Models\Bindings\Mappings\CreditMapperDefinition.cs" />
-    <Compile Include="Models\Bindings\Mappings\CategoryMapperDefinition.cs" />
+    <Compile Include="Models\Bindings\Mappings\CreateCategoryMapperDefinition.cs" />
     <Compile Include="Models\Bindings\OperationBindingModel.cs" />
     <Compile Include="Models\Budget.cs" />
     <Compile Include="Models\BudgetItem.cs" />

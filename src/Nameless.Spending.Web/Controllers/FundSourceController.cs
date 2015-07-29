@@ -19,6 +19,7 @@ namespace Nameless.Spending.Web.Controllers {
 		private readonly ICommandHandler<AlterFundSourceCommand> _alterFundSourceCommandHandler;
 		private readonly ICommandHandler<CreateFundSourceCommand> _createFundSourceCommandHandler;
 		private readonly ICommandHandler<DeleteFundSourceCommand> _deleteFundSourceCommandHandler;
+
 		private readonly IQueryHandler<FundSourceQuery, Page<FundSourceViewModel>> _fundSourceQueryHandler;
 
 		#endregion

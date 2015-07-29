@@ -19,11 +19,13 @@ namespace Nameless.Spending.Web.Controllers {
 		private readonly ICommandHandler<AlterCreditCommand> _alterCreditCommandHandler;
 		private readonly ICommandHandler<CreateCreditCommand> _createCreditCommandHandler;
 		private readonly ICommandHandler<DeleteCreditCommand> _deleteCreditCommandHandler;
+
 		private readonly IQueryHandler<CreditQuery, Page<CreditViewModel>> _creditQueryHandler;
 
 		private readonly ICommandHandler<AlterDebitCommand> _alterDebitCommandHandler;
 		private readonly ICommandHandler<CreateDebitCommand> _createDebitCommandHandler;
 		private readonly ICommandHandler<DeleteDebitCommand> _deleteDebitCommandHandler;
+
 		private readonly IQueryHandler<DebitQuery, Page<DebitViewModel>> _debitQueryHandler;
 
 		#endregion

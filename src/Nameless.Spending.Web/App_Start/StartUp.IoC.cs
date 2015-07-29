@@ -57,7 +57,9 @@ namespace Nameless.Spending.Web {
 			});
 
 			app.UseAutofacWebApi(configuration);
-			app.UseWebApi(configuration);
+			// I don't kown the answer. But if you're using Autofac with WebApi, the method Url.Route throws a NotImplementedException
+			// if the middleware UseWebApi is setted this way.
+			//app.UseWebApi(configuration);
 		}
 
 		#endregion

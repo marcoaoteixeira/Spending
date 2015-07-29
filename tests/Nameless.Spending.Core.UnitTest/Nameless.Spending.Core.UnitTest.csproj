@@ -61,6 +61,7 @@
     <Compile Include="CommandQuery\Commands\BudgetCommandHandlerTest.cs" />
     <Compile Include="Data\NHiberate\ModelInspectorTest.cs" />
     <Compile Include="Fixtures\DataSource.cs" />
+    <Compile Include="Fixtures\FakeRepository.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

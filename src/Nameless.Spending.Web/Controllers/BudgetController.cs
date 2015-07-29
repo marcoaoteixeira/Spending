@@ -20,10 +20,12 @@ namespace Nameless.Spending.Web.Controllers {
 		private readonly ICommandHandler<AlterBudgetCommand> _alterBudgetCommandHandler;
 		private readonly ICommandHandler<CreateBudgetCommand> _createBudgetCommandHandler;
 		private readonly ICommandHandler<DeleteBudgetCommand> _deleteBudgetCommandHandler;
+
 		private readonly IQueryHandler<BudgetQuery, Page<BudgetViewModel>> _budgetQueryHandler;
 
 		private readonly ICommandHandler<CreateBudgetItemCommand> _createBudgetItemCommandHandler;
 		private readonly ICommandHandler<DeleteBudgetItemCommand> _deleteBudgetItemCommandHandler;
+
 		private readonly IQueryHandler<BudgetItemQuery, Page<BudgetItemViewModel>> _budgetItemQueryHandler;
 
 		#endregion

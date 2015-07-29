@@ -36,13 +36,11 @@ namespace Nameless.Spending.Core.Infrastructure {
 			var entity = invocation.Arguments[0] as Entity;
 
 			if (entity != null) {
-				var type = entity.GetType();
-
 				if (entity.ID == 0) {
-					type.GetField("_dateCreated").SetValue(entity, _clock.UtcNow);
+					ReflectionHelper.SetPrivateFieldValue(entity, "_dateCreated", _clock.UtcNow);
 				}
 
-				type.GetField("_dateModified").SetValue(entity, _clock.UtcNow);
+				ReflectionHelper.SetPrivateFieldValue(entity, "_dateModified", _clock.UtcNow);
 			}
 
 			invocation.Proceed();

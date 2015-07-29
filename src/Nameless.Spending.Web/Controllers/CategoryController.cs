@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Routing;
 using Nameless.Framework;
 using Nameless.Framework.CommandQuery;
 using Nameless.Framework.Mapper;
@@ -86,7 +87,7 @@ namespace Nameless.Spending.Web.Controllers {
 			var command = Mapper.Map<CategoryBindingModel, CreateCategoryCommand>(binding);
 
 			_createCategoryCommandHandler.Handle(command);
-
+			
 			var view = QueryByID(command.CategoryID);
 
 			return Created(Url.Route("GetCategory", new { category = view.ID }), view);

@@ -7,6 +7,7 @@ using Nameless.Framework;
 using Nameless.Framework.Data;
 using Nameless.Spending.Core.CommandQuery.Commands;
 using Nameless.Spending.Core.Models;
+using Nameless.Spending.Core.UnitTest.Fixtures;
 using NUnit.Framework;
 
 namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
@@ -16,11 +17,11 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 		public void Can_Store_A_New_FundSource() {
 			// arrange
 			var repository = new Mock<IRepository>();
-			var command = new AlterFundSourceCommand {
+			var command = new CreateFundSourceCommand {
 				Name = "Test FundSource",
 				FundSourceID = 0
 			};
-			var handler = new AlterFundSourceCommandHandler(repository.Object);
+			var handler = new CreateFundSourceCommandHandler(repository.Object);
 			FundSource stored = null;
 			var dataStore = new List<FundSource>();
 
@@ -31,11 +32,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 
 				dataStore.Add(fundSource);
 			});
-
-			repository
-				.Setup(_ => _.FindOne<FundSource>(It.IsAny<Expression<Func<FundSource, bool>>>()))
-				.Returns((FundSource)null)
-				.Verifiable();
 
 			repository
 				.Setup(_ => _.Store(It.IsAny<object>()))
@@ -53,6 +49,27 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			Assert.AreNotEqual(0, stored.ID);
 			Assert.AreEqual(command.Name, stored.Name);
 			repository.VerifyAll();
+		}
+
+		[Test]
+		public void Can_Update_FundSource() {
+			// arrange
+			var repository = new FakeRepository();
+			var command = new AlterFundSourceCommand {
+				Name = "Test FundSource",
+				FundSourceID = 1
+			};
+			var handler = new AlterFundSourceCommandHandler(repository);
+
+			// act
+			handler.Handle(command);
+
+			var fundSource = repository.Load<FundSource>(1);
+
+			// assert
+			Assert.IsNotNull(fundSource);
+			Assert.AreEqual(command.Name, fundSource.Name);
+			Assert.AreEqual(command.FundSourceID, fundSource.ID);
 		}
 
 		[Test]

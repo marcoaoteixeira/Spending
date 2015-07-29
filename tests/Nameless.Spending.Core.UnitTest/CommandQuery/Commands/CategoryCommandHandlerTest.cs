@@ -7,6 +7,7 @@ using Nameless.Framework;
 using Nameless.Framework.Data;
 using Nameless.Spending.Core.CommandQuery.Commands;
 using Nameless.Spending.Core.Models;
+using Nameless.Spending.Core.UnitTest.Fixtures;
 using NUnit.Framework;
 
 namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
@@ -18,7 +19,7 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			var repository = new Mock<IRepository>();
 			var command = new CreateCategoryCommand {
 				Description = "Test Category",
-				ID = 0,
+				CategoryID = 0,
 				Ancestors = new[] { 3L }
 			};
 			var handler = new CreateCategoryCommandHandler(repository.Object);
@@ -32,11 +33,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 
 				dataStore.Add(category);
 			});
-
-			repository
-				.Setup(_ => _.FindOne<Category>(It.IsAny<Expression<Func<Category, bool>>>()))
-				.Returns((Category)null)
-				.Verifiable();
 
 			repository
 				.Setup(_ => _.Load<Category>(It.IsAny<long>()))
@@ -61,6 +57,30 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			CollectionAssert.IsNotEmpty(stored.Ancestors);
 			Assert.AreEqual(command.Ancestors.Single(), stored.Ancestors.Single().ID);
 			repository.VerifyAll();
+		}
+
+		[Test]
+		public void Can_Update_Category() {
+			// arrange
+			var repository = new FakeRepository();
+			var command = new AlterCategoryCommand {
+				Description = "Test Category",
+				CategoryID = 1,
+				Ancestors = new[] { 3L }
+			};
+			var handler = new AlterCategoryCommandHandler(repository);
+
+			// act
+			handler.Handle(command);
+
+			var updated = repository.Load<Category>(1);
+
+			// assert
+			Assert.IsNotNull(updated);
+			Assert.AreEqual(command.CategoryID, updated.ID);
+			Assert.AreEqual(command.Description, updated.Description);
+			CollectionAssert.IsNotEmpty(updated.Ancestors);
+			Assert.AreEqual(command.Ancestors.Single(), updated.Ancestors.Single().ID);
 		}
 
 		[Test]

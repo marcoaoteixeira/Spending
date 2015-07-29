@@ -7,6 +7,7 @@ using Nameless.Framework;
 using Nameless.Framework.Data;
 using Nameless.Spending.Core.CommandQuery.Commands;
 using Nameless.Spending.Core.Models;
+using Nameless.Spending.Core.UnitTest.Fixtures;
 using NUnit.Framework;
 
 namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
@@ -16,7 +17,7 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 		public void Can_Store_A_New_Debit() {
 			// arrange
 			var repository = new Mock<IRepository>();
-			var command = new AlterDebitCommand {
+			var command = new CreateDebitCommand {
 				Date = DateTime.Now,
 				Description = "Test Debit",
 				FundSourceID = 2,
@@ -24,7 +25,7 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 				Value = 10m,
 				CategoryID = 4
 			};
-			var handler = new AlterDebitCommandHandler(repository.Object);
+			var handler = new CreateDebitCommandHandler(repository.Object);
 			Debit stored = null;
 			var fundSourceDataStore = new List<FundSource>();
 
@@ -45,11 +46,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 
 				categoryDataStore.Add(obj);
 			});
-
-			repository
-				.Setup(_ => _.FindOne<Debit>(It.IsAny<Expression<Func<Debit, bool>>>()))
-				.Returns((Debit)null)
-				.Verifiable();
 
 			repository
 				.Setup(_ => _.Load<Category>(It.IsAny<long>()))
@@ -86,19 +82,55 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 		}
 
 		[Test]
+		public void Can_Update_Debit() {
+			// arrange
+			var repository = new FakeRepository();
+			var command = new AlterDebitCommand {
+				Date = DateTime.Now,
+				Description = "Test Debit",
+				AlterFundSourceID = 5,
+				CurrentFundSourceID = 1,
+				DebitID = 1,
+				Value = 10m,
+				CategoryID = 4
+			};
+			var handler = new AlterDebitCommandHandler(repository);
+
+			// act
+			handler.Handle(command);
+
+			var debit = repository.Load<Debit>(1);
+
+			// assert
+			Assert.IsNotNull(debit);
+			Assert.AreEqual(command.Date, debit.Date);
+			Assert.AreEqual(command.Description, debit.Description);
+			Assert.IsNotNull(debit.FundSource);
+			Assert.AreEqual(command.AlterFundSourceID, debit.FundSource.ID);
+			Assert.AreEqual(command.DebitID, debit.ID);
+			Assert.AreEqual(command.Value, debit.Value);
+			Assert.IsNotNull(debit.Category);
+			Assert.AreEqual(command.CategoryID, debit.Category.ID);
+		}
+
+		[Test]
 		public void Can_Delete_Debit() {
 			// arrange
 			var repository = new Mock<IRepository>();
 			var command = new DeleteDebitCommand {
+				FundSourceID = 3,
 				DebitID = 3,
 			};
 			var handler = new DeleteDebitCommandHandler(repository.Object);
 			var dataStore = new List<Debit>();
 
 			5.Times(_ => {
-				var debit = new Debit();
+				var debit = new Debit {
+					FundSource = new FundSource()
+				};
 
 				ReflectionHelper.SetPrivateFieldValue(debit, "_id", _ + 1);
+				ReflectionHelper.SetPrivateFieldValue(debit.FundSource, "_id", _ + 1);
 
 				dataStore.Add(debit);
 			});
