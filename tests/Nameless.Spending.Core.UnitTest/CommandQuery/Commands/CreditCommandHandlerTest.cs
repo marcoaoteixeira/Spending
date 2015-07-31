@@ -20,26 +20,11 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			var command = new CreateCreditCommand {
 				Date = DateTime.Now,
 				Description = "Test Credit",
-				FundSourceID = 2,
 				CreditID = 0,
 				Value = 10m
 			};
 			var handler = new CreateCreditCommandHandler(repository.Object);
 			Credit stored = null;
-			var dataStore = new List<FundSource>();
-
-			5.Times(_ => {
-				var obj = new FundSource();
-
-				ReflectionHelper.SetPrivateFieldValue(obj, "_id", _ + 1);
-
-				dataStore.Add(obj);
-			});
-
-			repository
-				.Setup(_ => _.Load<FundSource>(It.IsAny<long>()))
-				.Returns<long>(_ => dataStore.Single(item => item.ID == _))
-				.Verifiable();
 
 			repository
 				.Setup(_ => _.Store(It.IsAny<object>()))
@@ -57,8 +42,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			Assert.AreNotEqual(0, stored.ID);
 			Assert.AreEqual(command.Date, stored.Date);
 			Assert.AreEqual(command.Description, stored.Description);
-			Assert.IsNotNull(stored.FundSource);
-			Assert.AreEqual(command.FundSourceID, stored.FundSource.ID);
 			Assert.AreEqual(command.Value, stored.Value);
 			repository.VerifyAll();
 		}
@@ -70,8 +53,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			var command = new AlterCreditCommand {
 				Date = DateTime.Now,
 				Description = "Test Credit",
-				CurrentFundSourceID = 1,
-				AlterFundSourceID = 3,
 				CreditID = 1,
 				Value = 10m
 			};
@@ -86,8 +67,6 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			Assert.IsNotNull(credit);
 			Assert.AreEqual(command.Date, credit.Date);
 			Assert.AreEqual(command.Description, credit.Description);
-			Assert.IsNotNull(credit.FundSource);
-			Assert.AreEqual(command.AlterFundSourceID, credit.FundSource.ID);
 			Assert.AreEqual(command.Value, credit.Value);
 			Assert.AreEqual(command.CreditID, credit.ID);
 		}
@@ -104,12 +83,9 @@ namespace Nameless.Spending.Core.UnitTest.CommandQuery.Commands {
 			var dataStore = new List<Credit>();
 
 			5.Times(_ => {
-				var credit = new Credit {
-					FundSource = new FundSource()
-				};
+				var credit = new Credit();
 
 				ReflectionHelper.SetPrivateFieldValue(credit, "_id", _ + 1);
-				ReflectionHelper.SetPrivateFieldValue(credit.FundSource, "_id", _ + 1);
 
 				dataStore.Add(credit);
 			});

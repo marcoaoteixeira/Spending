@@ -9,7 +9,6 @@ namespace Nameless.Spending.Core.Models.Filters {
 		public decimal MaxValue { get; set; }
 		public DateTime MinDate { get; set; }
 		public DateTime MaxDate { get; set; }
-		public long FundSourceID { get; set; }
 
 		#endregion
 	}

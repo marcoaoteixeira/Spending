@@ -11,8 +11,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		public string Description { get; set; }
 		public decimal Value { get; set; }
 		public DateTime Date { get; set; }
-		public long CurrentFundSourceID { get; set; }
-		public long AlterFundSourceID { get; set; }
 
 		#endregion
 	}
@@ -28,9 +26,7 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		#region Public Override Methods
 
 		public override void Handle(AlterCreditCommand command) {
-			var obj = Repository.FindOne<Credit>(_ =>
-				_.ID == command.CreditID &&
-				_.FundSource.ID == command.CurrentFundSourceID);
+			var obj = Repository.FindOne<Credit>(_ => _.ID == command.CreditID);
 
 			if (obj == null) {
 				throw new EntityNotFoundException(typeof(Credit));
@@ -39,10 +35,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 			obj.Description = command.Description;
 			obj.Value = command.Value;
 			obj.Date = command.Date;
-
-			if (command.AlterFundSourceID > 0) {
-				obj.FundSource = Repository.Load<FundSource>(command.AlterFundSourceID);
-			}
 
 			Repository.Store(obj);
 		}
@@ -57,7 +49,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		public string Description { get; set; }
 		public decimal Value { get; set; }
 		public DateTime Date { get; set; }
-		public long FundSourceID { get; set; }
 
 		#endregion
 	}
@@ -76,8 +67,7 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 			var obj = new Credit {
 				Description = command.Description,
 				Value = command.Value,
-				Date = command.Date,
-				FundSource = Repository.Load<FundSource>(command.FundSourceID)
+				Date = command.Date
 			};
 
 			Repository.Store(obj);
@@ -108,9 +98,7 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		#region Public Override Methods
 
 		public override void Handle(DeleteCreditCommand command) {
-			var obj = Repository.FindOne<Credit>(_ =>
-				_.ID == command.CreditID &&
-				_.FundSource.ID == command.FundSourceID);
+			var obj = Repository.FindOne<Credit>(_ => _.ID == command.CreditID);
 
 			if (obj == null) {
 				throw new EntityNotFoundException(typeof(Credit));

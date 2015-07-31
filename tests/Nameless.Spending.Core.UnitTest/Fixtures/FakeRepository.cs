@@ -49,5 +49,14 @@ namespace Nameless.Spending.Core.UnitTest.Fixtures {
 		}
 
 		#endregion
+
+		#region IRepository Members
+
+
+		public dynamic ExecuteDirective(IDirective directive) {
+			throw new NotImplementedException();
+		}
+
+		#endregion
 	}
 }

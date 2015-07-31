@@ -4,7 +4,9 @@
 
 		public virtual decimal TotalCredit { get; set; }
 		public virtual decimal TotalDebit { get; set; }
-		public virtual decimal CurrentBalance { get; set; }
+		public virtual decimal CurrentBalance {
+			get { return TotalCredit - TotalDebit; }
+		}
 
 		#endregion
 	}

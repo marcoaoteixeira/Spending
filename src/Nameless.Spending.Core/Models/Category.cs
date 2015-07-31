@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Nameless.Spending.Core.Models {
 	public class Category : Entity {
 		#region	Private Read-Only Fields
 
-		private readonly IList<Category> _ancestors = new List<Category>();
+		private readonly IList<Category> _ancestors = new ObservableCollection<Category>();
+
+		#endregion
+
+		#region Private Fields
+
+		private string _breadCrumb;
 
 		#endregion
 
@@ -17,16 +25,28 @@ namespace Nameless.Spending.Core.Models {
 		}
 
 		#endregion
-		
+
+		#region Public Constructors
+
+		public Category() {
+			((ObservableCollection<Category>)_ancestors).CollectionChanged += Ancestors_CollectionChanged;
+		}
+
+		#endregion
+
 		#region Public Virtual Methods
 
 		public virtual string GetBreadCrumb(string separator = " / ") {
+			if (!string.IsNullOrWhiteSpace(_breadCrumb)) {
+				return _breadCrumb;
+			}
+			
 			var descriptions = _ancestors
 				.Select(ancestor => ancestor.Description)
 				.Concat(new[] { Description })
 				.ToArray();
 
-			return string.Join(separator, descriptions);
+			return _breadCrumb = string.Join(separator, descriptions);
 		}
 
 		#endregion
@@ -47,6 +67,14 @@ namespace Nameless.Spending.Core.Models {
 
 		public override int GetHashCode() {
 			return ID.GetHashCode();
+		}
+
+		#endregion
+
+		#region Private Methods
+
+		private void Ancestors_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+			_breadCrumb = string.Empty;
 		}
 
 		#endregion

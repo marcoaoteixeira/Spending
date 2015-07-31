@@ -74,11 +74,6 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 				specs.Add(_ =>
 					((Debit)_).Category.ID == debit.CategoryID);
 			}
-
-			if (debit.FundSourceID != 0) {
-				specs.Add(_ =>
-					((Debit)_).FundSource.ID == debit.FundSourceID);
-			}
 		}
 
 		#endregion

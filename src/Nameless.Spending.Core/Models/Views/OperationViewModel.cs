@@ -7,8 +7,6 @@ namespace Nameless.Spending.Core.Models.Views {
 		public string Description { get; set; }
 		public decimal Value { get; set; }
 		public DateTime Date { get; set; }
-		public long FundSourceID { get; set; }
-		public string FundSourceName { get; set; }
 
 		#endregion
 	}

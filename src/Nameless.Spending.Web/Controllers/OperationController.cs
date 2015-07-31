@@ -71,10 +71,9 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Operation Credit
 
 		[HttpDelete]
-		[Route("api/fundSource/{fundSource:long:min(1)}/credit/{credit:long:min(1)}")]
-		public IHttpActionResult DeleteCredit(long fundSource, long credit) {
+		[Route("api/operation/credit/{credit:long:min(1)}")]
+		public IHttpActionResult DeleteCredit(long credit) {
 			var command = new DeleteCreditCommand {
-				FundSourceID = fundSource,
 				CreditID = credit
 			};
 
@@ -84,9 +83,9 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/fundSource/{fundSource:long:min(1)}/credit/{credit:long:min(1)}/", Name = "GetCredit")]
-		public IHttpActionResult GetCredit(long fundSource, long credit) {
-			var view = QueryCreditByID(fundSource, credit);
+		[Route("api/operation/credit/{credit:long:min(1)}/", Name = "GetCredit")]
+		public IHttpActionResult GetCredit(long credit) {
+			var view = QueryCreditByID(credit);
 
 			if (view == null) {
 				return NotFound();
@@ -96,10 +95,8 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/fundSource/{fundSource:long:min(1)}/credits")]
-		public IHttpActionResult GetCredit(long fundSource, [FromUri]CreditFilterModel filter) {
-			filter.FundSourceID = fundSource;
-
+		[Route("api/operation/credits")]
+		public IHttpActionResult GetCredit([FromUri]CreditFilterModel filter) {
 			var query = new CreditQuery(filter);
 			var result = _creditQueryHandler.Handle(query);
 
@@ -107,30 +104,27 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpPost]
-		[Route("api/fundSource/{fundSource:long:min(1)}/credit")]
-		public IHttpActionResult PostCredit(long fundSource, [FromBody]CreditBindingModel binding) {
+		[Route("api/operation/credit")]
+		public IHttpActionResult PostCredit([FromBody]CreditBindingModel binding) {
 			var command = Mapper.Map<CreditBindingModel, CreateCreditCommand>(binding);
-
-			command.FundSourceID = fundSource;
 
 			_createCreditCommandHandler.Handle(command);
 
-			var view = QueryCreditByID(fundSource, command.CreditID);
+			var view = QueryCreditByID(command.CreditID);
 
 			return Created(Url.Route("GetCredit", new { id = view.ID }), view);
 		}
 
 		[HttpPut]
-		[Route("api/fundSource/{fundSource:long:min(1)}/credit/{credit:long:min(1)}")]
-		public IHttpActionResult PutCredit(long fundSource, long credit, CreditBindingModel binding) {
+		[Route("api/operation/credit/{credit:long:min(1)}")]
+		public IHttpActionResult PutCredit(long credit, CreditBindingModel binding) {
 			var command = Mapper.Map<CreditBindingModel, AlterCreditCommand>(binding);
 
 			command.CreditID = credit;
-			command.CurrentFundSourceID = fundSource;
 
 			_alterCreditCommandHandler.Handle(command);
 
-			var view = QueryCreditByID(fundSource, command.CreditID);
+			var view = QueryCreditByID(command.CreditID);
 
 			return Ok(view);
 		}
@@ -140,10 +134,9 @@ namespace Nameless.Spending.Web.Controllers {
 		#region Operation Debit
 
 		[HttpDelete]
-		[Route("api/fundSource/{fundSource:long:min(1)}/debit/{debit:long:min(1)}")]
-		public IHttpActionResult DeleteDebit(long fundSource, long debit) {
+		[Route("api/operation/debit/{debit:long:min(1)}")]
+		public IHttpActionResult DeleteDebit(long debit) {
 			var command = new DeleteDebitCommand {
-				FundSourceID = fundSource,
 				DebitID = debit
 			};
 
@@ -153,9 +146,9 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/fundSource/{fundSource:long:min(1)}/debit/{debit:long:min(1)}/", Name = "GetDebit")]
-		public IHttpActionResult GetDebit(long fundSource, long debit) {
-			var view = QueryDebitByID(fundSource, debit);
+		[Route("api/operation/debit/{debit:long:min(1)}/", Name = "GetDebit")]
+		public IHttpActionResult GetDebit(long debit) {
+			var view = QueryDebitByID(debit);
 
 			if (view == null) {
 				return NotFound();
@@ -165,10 +158,8 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpGet]
-		[Route("api/fundSource/{fundSource:long:min(1)}/debits")]
-		public IHttpActionResult GetDebit(long fundSource, [FromUri]DebitFilterModel filter) {
-			filter.FundSourceID = fundSource;
-
+		[Route("api/operation/debits")]
+		public IHttpActionResult GetDebit([FromUri]DebitFilterModel filter) {
 			var query = new DebitQuery(filter);
 			var result = _debitQueryHandler.Handle(query);
 
@@ -176,30 +167,27 @@ namespace Nameless.Spending.Web.Controllers {
 		}
 
 		[HttpPost]
-		[Route("api/fundSource/{fundSource:long:min(1)}/debit")]
-		public IHttpActionResult PostDebit(long fundSource, [FromBody]DebitBindingModel binding) {
+		[Route("api/operation/debit")]
+		public IHttpActionResult PostDebit([FromBody]DebitBindingModel binding) {
 			var command = Mapper.Map<DebitBindingModel, CreateDebitCommand>(binding);
-
-			command.FundSourceID = fundSource;
 
 			_createDebitCommandHandler.Handle(command);
 
-			var view = QueryDebitByID(fundSource, command.DebitID);
+			var view = QueryDebitByID(command.DebitID);
 
 			return Created(Url.Route("GetDebit", new { id = view.ID }), view);
 		}
 
 		[HttpPut]
-		[Route("api/fundSource/{fundSource:long:min(1)}/debit/{debit:long:min(1)}")]
-		public IHttpActionResult PutDebit(long fundSource, long debit, DebitBindingModel binding) {
+		[Route("api/operation/debit/{debit:long:min(1)}")]
+		public IHttpActionResult PutDebit(long debit, DebitBindingModel binding) {
 			var command = Mapper.Map<DebitBindingModel, AlterDebitCommand>(binding);
 
 			command.DebitID = debit;
-			command.CurrentFundSourceID = fundSource;
-
+			
 			_alterDebitCommandHandler.Handle(command);
 
-			var view = QueryDebitByID(fundSource, command.DebitID);
+			var view = QueryDebitByID(command.DebitID);
 
 			return Ok(view);
 		}
@@ -210,9 +198,8 @@ namespace Nameless.Spending.Web.Controllers {
 
 		#region Private Methods
 
-		private CreditViewModel QueryCreditByID(long fundSource, long credit) {
+		private CreditViewModel QueryCreditByID(long credit) {
 			var filter = new CreditFilterModel {
-				FundSourceID = fundSource,
 				ID = credit
 			};
 			var query = new CreditQuery(filter);
@@ -221,9 +208,8 @@ namespace Nameless.Spending.Web.Controllers {
 			return result.Items.SingleOrDefault();
 		}
 
-		private DebitViewModel QueryDebitByID(long fundSource, long debit) {
+		private DebitViewModel QueryDebitByID(long debit) {
 			var filter = new DebitFilterModel {
-				FundSourceID = fundSource,
 				ID = debit
 			};
 			var query = new DebitQuery(filter);

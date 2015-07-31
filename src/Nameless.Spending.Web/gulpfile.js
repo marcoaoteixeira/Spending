@@ -1,74 +1,68 @@
 ﻿/* Include Scripts ********************************************************* */
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var del = require('del');
-var minifyCSS = require('gulp-minify-css');
-var copy = require('gulp-copy');
-var bower = require('gulp-bower');
+var gulp       = require('gulp');
+var concat     = require('gulp-concat');
+var uglify     = require('gulp-uglify');
+var del        = require('del');
+var minifyCSS  = require('gulp-minify-css');
+var copy       = require('gulp-copy');
+var bower      = require('gulp-bower');
 var sourcemaps = require('gulp-sourcemaps');
 /* ********************************************************* Include Scripts */
 
 var config = {
-	/* AngularJS Bundle **************************************************** */
+	/* AngularJS Bundle ********************************************************* */
 	angularsrc: [
 		'bower_components/angular/angular.min.js',
 		'bower_components/angular-i18n/angular-locale_pt-br.js',
 		'bower_components/angular-animate/angular-animate.min.js',
 		'bower_components/angular-aria/angular-aria.min.js',
-<<<<<<< HEAD
-		//'bower_components/angular-bootstrap-ui/src/**/*.js',
-=======
->>>>>>> 04794b53ddf6083398501095fbe57c9540a5256a
 		'bower_components/angular-cookies/angular-cookies.min.js',
 		'bower_components/angular-loader/angular-loader.min.js',
 		'bower_components/angular-messages/angular-messages.min.js',
 		'bower_components/angular-resource/angular-resource.min.js',
 		'bower_components/angular-route/angular-route.min.js',
 		'bower_components/angular-sanitize/angular-sanitize.min.js',
-		'bower_components/angular-touch/angular-touch.min.js',
-
-		'bower_components/angular-touch/angular-touch.min.js',
+		'bower_components/angular-touch/angular-touch.min.js'
 	],
 	angularbundle: 'Scripts/angular-bundle.min.js',
-	/* **************************************************** AngularJS Bundle */
+	/* ********************************************************* AngularJS Bundle */
 
-	/* Bootstrap Bundle **************************************************** */
+	/* Bootstrap Bundle ********************************************************* */
 	bootstrapsrc: [
 		'bower_components/bootstrap/dist/js/bootstrap.min.js'
 	],
 	bootstrapbundle: 'Scripts/bootstrap-bundle.min.js',
-	/* **************************************************** Bootstrap Bundle */
+	/* ********************************************************* Bootstrap Bundle */
 
-	/* jQuery Bundle ******************************************************* */
+	/* jQuery Bundle ************************************************************ */
 	jquerysrc: [
 		'bower_components/jquery/dist/jquery.min.js'
 	],
 	jquerybundle: 'Scripts/jquery-bundle.min.js',
-	/* ******************************************************* jQuery Bundle */
+	/* ************************************************************ jQuery Bundle */
 
-	/* Lodash Bundle ******************************************************* */
+	/* Lodash Bundle ************************************************************ */
 	lodashsrc: [
 		'bower_components/lodash/lodash.min.js'
 	],
 	lodashbundle: 'Scripts/lodash-bundle.min.js',
-	/* ******************************************************* Lodash Bundle */
+	/* ************************************************************ Lodash Bundle */
 
-	/* RespondJS Bundle **************************************************** */
+	/* RespondJS Bundle ********************************************************* */
 	respondjssrc: [
 		'bower_components/respondJS/dest/respond.min.js'
 	],
 	respondjsbundle: 'Scripts/respondjs-bundle.min.js',
-	/* **************************************************** RespondJS Bundle */
+	/* ********************************************************* RespondJS Bundle */
 
-	/* Utils Bundle ******************************************************** */
+	/* Utils Bundle ************************************************************* */
 	utilssrc: [
 		'Scripts/strings.js'
 	],
 	utilsbundle: 'Scripts/utils-bundle.min.js',
-	/* ******************************************************** Utils Bundle */
+	/* ************************************************************* Utils Bundle */
 	
-	/* Application Bundle ************************************************** */
+	/* Application Bundle ******************************************************* */
 	applicationsrc: [
 		'App/application.js',
 		'App/config.js',
@@ -83,18 +77,18 @@ var config = {
 		'App/services/translation-service.js'
 	],
 	applicationbundle: 'App/application-bundle.min.js',
-	/* ************************************************** Application Bundle */
+	/* ******************************************************* Application Bundle */
 
-	/* Bootstrap CSS and Fonts ********************************************* */
+	/* Bootstrap CSS and Fonts ************************************************** */
 	bootstrapcss: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
 	boostrapfonts: 'bower_components/bootstrap/dist/fonts/*.*',
-	/* ********************************************* Bootstrap CSS and Fonts */
+	/* ************************************************** Bootstrap CSS and Fonts */
 
-	/* Application CSS and Fonts ******************************************* */
+	/* Application CSS and Fonts ************************************************ */
 	appcss: 'Content/main.css',
 	fontsout: 'Content/dist/fonts',
-	cssout: 'Content/dist/css'
-	/* ******************************************* Application CSS and Fonts */
+	cssout: 'Content/dist/css',
+	/* ************************************************ Application CSS and Fonts */
 }
 
 /* Synchronously delete the output script file(s) ************************** */
@@ -109,7 +103,7 @@ gulp.task('clean-vendor-scripts', function (callback) {
 		config.applicationbundle
 	], callback);
 });
-/* ************************************************************************* */
+/* ************************** Synchronously delete the output script file(s) */
 
 /* Create an AngularJS bundled file **************************************** */
 gulp.task('angular-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -117,7 +111,7 @@ gulp.task('angular-bundle', ['clean-vendor-scripts', 'bower-restore'], function 
 		.pipe(concat('angular-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* **************************************** Create an AngularJS bundled file */
 
 /* Create a Bootstrap bundled file ***************************************** */
 gulp.task('bootstrap-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -127,7 +121,7 @@ gulp.task('bootstrap-bundle', ['clean-vendor-scripts', 'bower-restore'], functio
 		.pipe(sourcemaps.write('maps'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* ***************************************** Create a Bootstrap bundled file */
 
 /* Create a jQuery bundled file ******************************************** */
 gulp.task('jquery-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -135,7 +129,7 @@ gulp.task('jquery-bundle', ['clean-vendor-scripts', 'bower-restore'], function (
 		.pipe(concat('jquery-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* ******************************************** Create a jQuery bundled file */
 
 /* Create a Lodash bundled file ******************************************** */
 gulp.task('lodash-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -143,7 +137,7 @@ gulp.task('lodash-bundle', ['clean-vendor-scripts', 'bower-restore'], function (
 		.pipe(concat('lodash-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* ******************************************** Create a Lodash bundled file */
 
 /* Create a RespondJS bundled file ***************************************** */
 gulp.task('respondjs-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -151,7 +145,7 @@ gulp.task('respondjs-bundle', ['clean-vendor-scripts', 'bower-restore'], functio
 		.pipe(concat('respondjs-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* ***************************************** Create a RespondJS bundled file */
 
 /* Create a Utils bundled file ********************************************* */
 gulp.task('utils-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -159,7 +153,7 @@ gulp.task('utils-bundle', ['clean-vendor-scripts', 'bower-restore'], function ()
 		.pipe(concat('utils-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* ********************************************* Create a Utils bundled file */
 
 /* Create a Application bundled file *************************************** */
 gulp.task('application-bundle', ['clean-vendor-scripts', 'bower-restore'], function () {
@@ -167,7 +161,7 @@ gulp.task('application-bundle', ['clean-vendor-scripts', 'bower-restore'], funct
 		.pipe(concat('application-bundle.min.js'))
 		.pipe(gulp.dest('Scripts'));
 });
-/* ************************************************************************* */
+/* *************************************** Create a Application bundled file */
 
 /* Synchronously delete the output style files (css / fonts) *************** */
 gulp.task('clean-styles', function (callback) {
@@ -176,7 +170,7 @@ gulp.task('clean-styles', function (callback) {
 		config.cssout
 	], callback);
 });
-/* ************************************************************************* */
+/* *************** Synchronously delete the output style files (css / fonts) */
 
 /* Combine and the vendor files from bower into bundles (output to the Scripts
    folder ****************************************************************** */
@@ -198,36 +192,35 @@ gulp.task('css', ['clean-styles', 'bower-restore'], function () {
 	return gulp.src([
 		config.bootstrapcss,
 		config.appcss
-	])
-		.pipe(concat('app.css'))
+	]).pipe(concat('app.css'))
 		.pipe(gulp.dest(config.cssout))
 		.pipe(minifyCSS())
 		.pipe(concat('app.min.css'))
 		.pipe(gulp.dest(config.cssout));
 });
-/* ************************************************************************* */
+/* ******************************************************* Build style files */
 
 /* Copy fonts to output folder ********************************************* */
 gulp.task('fonts', ['clean-styles', 'bower-restore'], function () {
 	return gulp.src(config.boostrapfonts)
 		.pipe(gulp.dest(config.fontsout));
 });
-/* ************************************************************************* */
+/* ********************************************* Copy fonts to output folder */
 
 /* Combine and minify css files and output fonts *************************** */
 gulp.task('styles', ['css', 'fonts'], function () {
 
 });
-/* ************************************************************************* */
+/* *************************** Combine and minify css files and output fonts */
 
 /* Restore all bower packages ********************************************** */
 gulp.task('bower-restore', function () {
 	return bower();
 });
-/* ************************************************************************* */
+/* ********************************************** Restore all bower packages */
 
 /* Set a default tasks ***************************************************** */
 gulp.task('default', ['vendor-scripts', 'styles'], function () {
 
 });
-/* ************************************************************************* */
+/* ***************************************************** Set a default tasks */

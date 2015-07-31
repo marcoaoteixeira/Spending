@@ -25,9 +25,6 @@ namespace Nameless.Spending.Core.Data.NHibernate.Mappings {
 			Property(property => property.Date
 				, mapping => mapping.Column("date"));
 
-			ManyToOne(property => property.FundSource
-				, mapping => mapping.Column("fund_source_id"));
-
 			ManyToOne(property => property.Category
 				, mapping => mapping.Column("category_id"));
 		}

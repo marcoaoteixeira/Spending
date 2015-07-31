@@ -75,7 +75,7 @@ namespace Nameless.Spending.Web.Controllers {
 		[HttpGet]
 		[Route("api/categories")]
 		public IHttpActionResult Get([FromUri]CategoryFilterModel filter) {
-			var query = new CategoryQuery(filter);
+			var query = new CategoryQuery(filter ?? new CategoryFilterModel());
 			var result = _categoryQueryHandler.Handle(query);
 
 			return Ok(result);

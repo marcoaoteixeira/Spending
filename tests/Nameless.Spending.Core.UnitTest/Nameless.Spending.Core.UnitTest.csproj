@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandQuery\Commands\FundSourceCommandHandlerTest.cs" />
     <Compile Include="CommandQuery\Commands\DebitCommandHandlerTest.cs" />
     <Compile Include="CommandQuery\Commands\CreditCommandHandlerTest.cs" />
     <Compile Include="CommandQuery\Commands\CategoryCommandHandlerTest.cs" />

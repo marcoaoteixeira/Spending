@@ -12,7 +12,6 @@ namespace Nameless.Spending.Core.UnitTest.Data.NHiberate {
 		[TestCase(typeof(Category))]
 		[TestCase(typeof(Credit))]
 		[TestCase(typeof(Debit))]
-		[TestCase(typeof(FundSource))]
 		[TestCase(typeof(Operation))]
 		public void Returns_True_If_Type_BaseType_Is_Entity_Class(Type type) {
 			// arrange

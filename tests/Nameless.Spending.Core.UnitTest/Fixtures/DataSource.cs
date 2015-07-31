@@ -22,9 +22,6 @@ namespace Nameless.Spending.Core.UnitTest.Fixtures {
 		private IEnumerable<Debit> Debits {
 			get { return Entities.OfType<Debit>(); }
 		}
-		private IEnumerable<FundSource> FundSources {
-			get { return Entities.OfType<FundSource>(); }
-		}
 
 		public DataSource() {
 			Entities = new List<Entity>();
@@ -117,35 +114,6 @@ namespace Nameless.Spending.Core.UnitTest.Fixtures {
 				ReflectionHelper.SetPrivateFieldValue(obj, "_dateCreated", DateTime.Now);
 				ReflectionHelper.SetPrivateFieldValue(obj, "_dateModified", DateTime.Now.AddDays(1));
 				result.Entities.Add(obj);
-			});
-
-			#endregion
-
-			#region FundSource
-
-			ITEM_COUNT.Times(idx => {
-				var obj = new FundSource {
-					Name = string.Format("FundSource #{0}", idx + 1)
-				};
-
-				ITEM_COUNT.Times(creditIdx => obj.Credits.Add(result.Credits.ElementAt(creditIdx)));
-				ITEM_COUNT.Times(debitIdx => obj.Debits.Add(result.Debits.ElementAt(debitIdx)));
-
-				ReflectionHelper.SetPrivateFieldValue(obj, "_id", idx + 1);
-				ReflectionHelper.SetPrivateFieldValue(obj, "_dateCreated", DateTime.Now);
-				ReflectionHelper.SetPrivateFieldValue(obj, "_dateModified", DateTime.Now.AddDays(1));
-				ReflectionHelper.SetPrivateFieldValue(obj, "_totalCredit", result.Credits.Sum(_ => _.Value));
-				ReflectionHelper.SetPrivateFieldValue(obj, "_totalDebit", result.Debits.Sum(_ => _.Value));
-
-				result.Entities.Add(obj);
-			});
-
-			result.Entities.OfType<Credit>().Each((_, idx) => {
-				_.FundSource = result.Entities.OfType<FundSource>().ElementAt(idx);
-			});
-
-			result.Entities.OfType<Debit>().Each((_, idx) => {
-				_.FundSource = result.Entities.OfType<FundSource>().ElementAt(idx);
 			});
 
 			#endregion

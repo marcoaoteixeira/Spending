@@ -60,15 +60,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandQuery\Commands\BudgetCommandHandler.cs" />
-    <Compile Include="CommandQuery\Commands\FundSourceCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\CategoryCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\CommandHandlerBase.cs" />
     <Compile Include="CommandQuery\Commands\CreditCommandHandler.cs" />
     <Compile Include="CommandQuery\Commands\DebitCommandHandler.cs" />
+    <Compile Include="CommandQuery\Queries\BalanceQueryHandler.cs" />
     <Compile Include="CommandQuery\Queries\BudgetItemQuery.cs" />
     <Compile Include="CommandQuery\Queries\BudgetQuery.cs" />
-    <Compile Include="CommandQuery\Queries\FundSourceQuery.cs" />
     <Compile Include="CommandQuery\Queries\CategoryQuery.cs" />
+    <Compile Include="CommandQuery\Queries\ChartQueryHandler.cs" />
     <Compile Include="CommandQuery\Queries\CreditQuery.cs" />
     <Compile Include="CommandQuery\Queries\DebitQuery.cs" />
     <Compile Include="CommandQuery\Queries\FilterQuery.cs" />
@@ -81,7 +81,6 @@
     <Compile Include="Data\NHibernate\Mappings\CreditClassMapping.cs" />
     <Compile Include="Data\NHibernate\Mappings\DebitClassMapping.cs" />
     <Compile Include="Data\NHibernate\Mappings\EntityClassMapping.cs" />
-    <Compile Include="Data\NHibernate\Mappings\FundSourceClassMapping.cs" />
     <Compile Include="Data\NHibernate\Mappings\ReadOnly.cs" />
     <Compile Include="Data\NHibernate\ModelInspector.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="Models\Balance.cs" />
     <Compile Include="Models\Bindings\BudgetBindingModel.cs" />
     <Compile Include="Models\Bindings\BudgetItemBindingModel.cs" />
-    <Compile Include="Models\Bindings\FundSourceBindingModel.cs" />
     <Compile Include="Models\Bindings\CategoryBindingModel.cs" />
     <Compile Include="Models\Bindings\CreditBindingModel.cs" />
     <Compile Include="Models\Bindings\DebitBindingModel.cs" />
@@ -111,23 +109,24 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Credit.cs" />
     <Compile Include="Models\Debit.cs" />
+    <Compile Include="Models\Filters\BalancePerPeriodFilter.cs" />
     <Compile Include="Models\Filters\BudgetFilterModel.cs" />
     <Compile Include="Models\Filters\BudgetItemFilterModel.cs" />
-    <Compile Include="Models\Filters\FundSourceFilterModel.cs" />
     <Compile Include="Models\Filters\CategoryFilterModel.cs" />
     <Compile Include="Models\Filters\CreditFilterModel.cs" />
     <Compile Include="Models\Filters\DebitFilterModel.cs" />
     <Compile Include="Models\Filters\FilterModel.cs" />
-    <Compile Include="Models\FundSource.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\Operation.cs" />
+    <Compile Include="Models\Views\DebitPerCategoryViewModel.cs" />
+    <Compile Include="Models\Views\BalancePerPeriodViewModel.cs" />
+    <Compile Include="Models\Views\BalanceViewModel.cs" />
     <Compile Include="Models\Views\BudgetItemViewModel.cs" />
     <Compile Include="Models\Views\BudgetViewModel.cs" />
     <Compile Include="Models\Views\CategoryViewModel.cs" />
     <Compile Include="Models\Views\CreditViewModel.cs" />
     <Compile Include="Models\Views\DebitViewModel.cs" />
     <Compile Include="Models\Views\EntityViewModel.cs" />
-    <Compile Include="Models\Views\FundSourceViewModel.cs" />
     <Compile Include="Models\Views\Mappings\BudgetMapperDefinition.cs" />
     <Compile Include="Models\Views\Mappings\CategoryMapperDefinition.cs" />
     <Compile Include="Models\Views\OperationViewModel.cs" />

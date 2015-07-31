@@ -69,11 +69,6 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 				specs.Add(_ =>
 					((Credit)_).Date.Date <= credit.MaxDate.Date);
 			}
-
-			if (credit.FundSourceID != 0) {
-				specs.Add(_ =>
-					((Credit)_).FundSource.ID == credit.FundSourceID);
-			}
 		}
 
 		#endregion

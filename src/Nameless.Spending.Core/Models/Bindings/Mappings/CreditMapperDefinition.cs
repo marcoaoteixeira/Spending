@@ -29,8 +29,7 @@ namespace Nameless.Spending.Core.Models.Bindings.Mappings {
 		public override void Create() {
 			base.Create();
 
-			Configuration.CreateMap<CreditBindingModel, AlterCreditCommand>()
-				.ForMember(command => command.AlterFundSourceID, options => options.MapFrom(source => source.FundSourceID));
+			Configuration.CreateMap<CreditBindingModel, AlterCreditCommand>();
 		}
 
 		#endregion

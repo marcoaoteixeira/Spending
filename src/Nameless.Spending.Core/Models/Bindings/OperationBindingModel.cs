@@ -17,10 +17,6 @@ namespace Nameless.Spending.Core.Models.Bindings {
 		[Required(ErrorMessageResourceType = typeof(Validations), ErrorMessageResourceName = "Required")]
 		public DateTime? Date { get; set; }
 
-		[Display(ResourceType = typeof(Displays), Name = "FundSourceID")]
-		[Required(ErrorMessageResourceType = typeof(Validations), ErrorMessageResourceName = "Required")]
-		public long? FundSourceID { get; set; }
-
 		#endregion
 	}
 }

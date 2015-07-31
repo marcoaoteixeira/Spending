@@ -11,8 +11,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		public string Description { get; set; }
 		public decimal Value { get; set; }
 		public DateTime Date { get; set; }
-		public long CurrentFundSourceID { get; set; }
-		public long AlterFundSourceID { get; set; }
 		public long CategoryID { get; set; }
 
 		#endregion
@@ -29,9 +27,7 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		#region Public Override Methods
 
 		public override void Handle(AlterDebitCommand command) {
-			var obj = Repository.FindOne<Debit>(_ =>
-				_.ID == command.DebitID &&
-				_.FundSource.ID == command.CurrentFundSourceID);
+			var obj = Repository.FindOne<Debit>(_ => _.ID == command.DebitID);
 
 			if (obj == null) {
 				throw new EntityNotFoundException(typeof(Debit));
@@ -40,11 +36,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 			obj.Description = command.Description;
 			obj.Value = command.Value;
 			obj.Date = command.Date;
-
-			if (command.AlterFundSourceID > 0) {
-				obj.FundSource = Repository.Load<FundSource>(command.AlterFundSourceID);
-			}
-
 			obj.Category = Repository.Load<Category>(command.CategoryID);
 
 			Repository.Store(obj);
@@ -60,7 +51,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		public string Description { get; set; }
 		public decimal Value { get; set; }
 		public DateTime Date { get; set; }
-		public long FundSourceID { get; set; }
 		public long CategoryID { get; set; }
 
 		#endregion
@@ -81,7 +71,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 				Description = command.Description,
 				Value = command.Value,
 				Date = command.Date,
-				FundSource = Repository.Load<FundSource>(command.FundSourceID),
 				Category = Repository.Load<Category>(command.CategoryID)
 			};
 
@@ -97,7 +86,6 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		#region Public Properties
 
 		public long DebitID { get; set; }
-		public long FundSourceID { get; set; }
 
 		#endregion
 	}
@@ -113,9 +101,7 @@ namespace Nameless.Spending.Core.CommandQuery.Commands {
 		#region Public Override Methods
 
 		public override void Handle(DeleteDebitCommand command) {
-			var obj = Repository.FindOne<Debit>(_ =>
-				_.ID == command.DebitID &&
-				_.FundSource.ID == command.FundSourceID);
+			var obj = Repository.FindOne<Debit>(_ => _.ID == command.DebitID);
 
 			if (obj == null) {
 				throw new EntityNotFoundException(typeof(Debit));
