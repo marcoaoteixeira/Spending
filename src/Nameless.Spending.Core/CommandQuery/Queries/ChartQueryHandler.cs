@@ -4,7 +4,6 @@ using System.Linq;
 using Nameless.Framework;
 using Nameless.Framework.CommandQuery;
 using Nameless.Framework.Data;
-using Nameless.Framework.Data.NHibernate;
 using Nameless.Spending.Core.Models;
 using Nameless.Spending.Core.Models.Views;
 
@@ -45,11 +44,21 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 			var debits = _repository.Query<Debit>()
 				.Where(_ => _.Date.Date >= query.StartDate.Date && _.Date.Date <= query.EndDate.Date)
 				.ToList();
+			// Group by category bread crumb.
 			var groups = debits.GroupBy(_ => _.Category.GetBreadCrumb()).OrderBy(_ => _.Key);
 
 			return groups.Select(group => {
+				// Gets the first item. We'll need only the category ID, so, does not matter
+				// what position the item was, because all items, in this group, has the
+				// same category.
+				var first = group.FirstOrDefault(); 
+
 				return new DebitPerCategoryViewModel {
-					
+					CategoryDescription = group.Key,
+					CategoryID = first.Category.ID,
+					EndDate = query.EndDate,
+					StartDate = query.StartDate,
+					TotalDebits = group.Sum(_ => _.Value)
 				};
 			});
 		}

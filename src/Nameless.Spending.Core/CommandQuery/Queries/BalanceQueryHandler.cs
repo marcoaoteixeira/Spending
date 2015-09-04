@@ -9,9 +9,9 @@ using Nameless.Spending.Core.Models;
 using Nameless.Spending.Core.Models.Views;
 
 namespace Nameless.Spending.Core.CommandQuery.Queries {
-	public class GetBalanceQuery : IQuery { }
+	public class BalanceQuery : IQuery { }
 
-	public class GetBalanceQueryHandler : IQueryHandler<GetBalanceQuery, BalanceViewModel> {
+	public class BalanceQueryHandler : IQueryHandler<BalanceQuery, BalanceViewModel> {
 		#region Private Static Read-Only Fields
 
 		private static readonly string SQL = "SELECT COALESCE((SELECT SUM(credits.value) FROM credits), 0.000) AS TotalCredits, COALESCE((SELECT SUM(debits.value) FROM debits), 0.000) AS TotalDebits";
@@ -26,7 +26,7 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 
 		#region Public Constructors
 
-		public GetBalanceQueryHandler(IRepository repository) {
+		public BalanceQueryHandler(IRepository repository) {
 			Guard.Against.Null(repository, "repository");
 
 			_repository = repository;
@@ -34,9 +34,9 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 
 		#endregion
 
-		#region IQueryHandler<GetBalanceQuery,BalanceViewModel> Members
+		#region IQueryHandler<BalanceQuery,BalanceViewModel> Members
 
-		public BalanceViewModel Handle(GetBalanceQuery query) {
+		public BalanceViewModel Handle(BalanceQuery query) {
 			var result = _repository.ExecuteDirective(new SQLDirective {
 				Text = SQL
 			});
@@ -85,7 +85,7 @@ namespace Nameless.Spending.Core.CommandQuery.Queries {
 
 			var credits = _repository.Query<Credit>().Where(_ => _.Date.Date >= query.StartDate.Date && _.Date.Date <= query.EndDate.Date).ToList();
 			var debits = _repository.Query<Debit>().Where(_ => _.Date.Date >= query.StartDate.Date && _.Date.Date <= query.EndDate.Date).ToList();
-			var totalDays = Convert.ToInt64((query.EndDate.Date - query.StartDate.Date).TotalDays);
+			var totalDays = Convert.ToInt64((query.EndDate.Date - query.StartDate.Date).TotalDays + 1);
 			var result = new List<BalancePerPeriodViewModel>();
 
 			totalDays.Times(day => {

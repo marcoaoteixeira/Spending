@@ -8,13 +8,13 @@ namespace Nameless.Spending.Web.Controllers {
 	public class BalanceController : WebApiControllerBase {
 		#region Private Read-Only Fields
 
-		private readonly IQueryHandler<GetBalanceQuery, BalanceViewModel> _queryHandler;
+		private readonly IQueryHandler<BalanceQuery, BalanceViewModel> _queryHandler;
 
 		#endregion
 
 		#region Public Constructors
 
-		public BalanceController(IQueryHandler<GetBalanceQuery, BalanceViewModel> queryHandler) {
+		public BalanceController(IQueryHandler<BalanceQuery, BalanceViewModel> queryHandler) {
 			Guard.Against.Null(queryHandler, "queryHandler");
 
 			_queryHandler = queryHandler;
@@ -27,7 +27,7 @@ namespace Nameless.Spending.Web.Controllers {
 		[HttpGet]
 		[Route("api/balance")]
 		public IHttpActionResult Get() {
-			var result = _queryHandler.Handle(new GetBalanceQuery());
+			var result = _queryHandler.Handle(new BalanceQuery());
 
 			return Ok(result);
 		}

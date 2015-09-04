@@ -157,7 +157,7 @@
     <Compile Include="Controllers\BalanceController.cs" />
     <Compile Include="Controllers\BudgetController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
