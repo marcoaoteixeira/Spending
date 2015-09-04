@@ -127,6 +127,8 @@
     <Compile Include="Models\Views\CreditViewModel.cs" />
     <Compile Include="Models\Views\DebitViewModel.cs" />
     <Compile Include="Models\Views\EntityViewModel.cs" />
+    <Compile Include="Models\Views\Mappings\DebitMapperDefinition.cs" />
+    <Compile Include="Models\Views\Mappings\CreditMapperDefinition.cs" />
     <Compile Include="Models\Views\Mappings\BudgetMapperDefinition.cs" />
     <Compile Include="Models\Views\Mappings\CategoryMapperDefinition.cs" />
     <Compile Include="Models\Views\OperationViewModel.cs" />
